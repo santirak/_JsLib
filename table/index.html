@@ -19,6 +19,11 @@
         var column_view = new Column_view()
         column_view.name = "Column_1"
         column_view.contentKeyName = "column_1"
+        column_view.styleForHeadCells = {
+            backgroundColor: "pink",
+            minWidth: "150px",
+            maxWidth: "150px"
+        }
         
         Columns.push(column_view)
 
@@ -54,6 +59,7 @@
         var column_view = new Column_view()
         column_view.name = "sub_1"
         column_view.contentKeyName = "sub_1"
+        
         subcolumns.push(column_view)
 
         Columns[0].subcolumns = subcolumns
@@ -125,6 +131,7 @@
         var column_view = new Column_view()
         column_view.name = "s_sub_1"
         column_view.contentKeyName = "sub_1"
+        
         subcolumns.push(column_view)
         Columns[3].subcolumns[3].subcolumns= subcolumns
 

@@ -41,11 +41,16 @@ class Table_view{
         -   to change style of only head cells in a column, edit column.styleForContentCells
 
         -   to make table alway extend to full width when table width is smaller than parent width,  set this.isTableAlwayFullParentWidth
+
+        -   to set width of column set 
+                column.styleForHeadCells = {
+                    minWidth: "100px",
+                    maxWidth: "100px"
+                }
         
     WARNING
         -   borderCollapse = "collapse" is not used so borderWidth will be display double of the borderWidth value
 
-        -   this.fixTableheadRows() and this.fixCellsFirstColumn() only work when tableNode is displaying
 
 
     DEPENDENCY
@@ -67,7 +72,6 @@ class Table_view{
         }
     
         this.styleForContentCells = {
-    
         }
     
         this.isHeadFixed = true
@@ -528,7 +532,7 @@ class Table_view{
         contentRow.rowNode.innerHTML = ""
     }
 
-    
+
     /**
         @param {Array} rowContents
      */
