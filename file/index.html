@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+</head>
+<body>
+
+
+    
+
+    this page for testing  File<br>
+    <input id="file" type="file"">
+    
+    <script type="module">
+
+        import File_model from "./file_model.js"
+        var file_model = new File_model()
+
+
+
+        
+
+        function  testFunction(){
+            var files = document.getElementById("file").files
+            console.log(files)
+            console.log(file_model.getFileExtension(files[0]))
+            console.log(file_model.checkFileSize(files[0]))
+            console.log(file_model.checkFileExtension(files[0]))
+        }
+
+
+        document.getElementById("file").addEventListener("change", testFunction)
+        
+
+    </script>
+
+    
+    
+</body>
+</html>
