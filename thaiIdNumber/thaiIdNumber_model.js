@@ -1,5 +1,7 @@
 
-export default function ThaiIdNumber_model(){
+
+export default class ThaiIdNumber_model {
+    
 
     /*    
     README
@@ -18,12 +20,15 @@ export default function ThaiIdNumber_model(){
 
     */
 
-    
-    this.magicNumber = new function(){
-        this.hyphenPositions = [1,5,10,12]
-    }
 
-    this.checkId = function(thaiId){
+    constructor() {
+        this.magicNumbers = new function(){
+            this.hyphenPositions = [1,5,10,12]
+        }
+    }
+    
+
+    checkId(thaiId){
         thaiId = this.removeSpaceAndHyphen(thaiId)
         if(thaiId.length!==13){
             return false
@@ -34,14 +39,17 @@ export default function ThaiIdNumber_model(){
         return true
     }
 
-    this.addHyphen = function(thaiId){
+    addHyphen(thaiId){
 
         thaiId = this.removeSpaceAndHyphen(thaiId)
 
-        var isOk = this.checkId(thaiId)
-        if(isOk===false) return false
+        if(!isNaN(Number(thaiId))){
+            thaiId = thaiId.toString()
+        }
+        // var isOk = this.checkId(thaiId)
+        // if(isOk===false) return false
        
-        var hyphenPositions = this.magicNumber.hyphenPositions
+        var hyphenPositions = this.magicNumbers.hyphenPositions
         var thaiId_withHyphen = ""
         var i;
         for(i=0; i<thaiId.length; i++){
@@ -53,25 +61,28 @@ export default function ThaiIdNumber_model(){
         return thaiId_withHyphen;
     }
 
-
-    this.removeSpace = function(thaiId){
-        return  thaiId.replace(/\s/g,'');
+    convertNumberToText(thaiId){
+        if(!isNaN(Number(thaiId))){
+            thaiId = thaiId.toString()
+        }
+        return thaiId
     }
 
-    this.removeHyphen = function(thaiId){
-        return  thaiId.replace(/-/g, "");
+    removeSpace(thaiId){
+        return  this.convertNumberToText(thaiId).replace(/\s/g,'');
     }
 
-    this.removeSpaceAndHyphen = function(thaiId){
+    removeHyphen(thaiId){
+        return  this.convertNumberToText(thaiId).replace(/-/g, "");
+    }
+
+    removeSpaceAndHyphen(thaiId){
         thaiId = this.removeSpace(thaiId)
         thaiId = this.removeHyphen(thaiId)
         return thaiId
     }
     
 
-    this._init = (function(){
-        
-    }).bind(this)()
-
 }
+
 
