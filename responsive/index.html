@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+</head>
+<body>
+
+    this page for testing ...<br>
+ 
+
+    <script type="module">
+
+
+        import Responsive_viewControl from "./responsive_viewControl.js"
+        var responsive_viewControl = new Responsive_viewControl()
+
+        var stylesByProperty = {
+            width: {
+                0: "50px",
+                1: "100px",
+                2: "150px",
+                3: "200px",
+                4: "250px"
+            }
+        }
+
+        var parentNode = document.createElement("DIV")
+        parentNode.style.height = "100px"
+        parentNode.style.width = "700px"
+        parentNode.style.float = "left"
+        parentNode.style.backgroundColor = "pink"
+        parentNode.innerHTML = "0--------"
+
+        responsive_viewControl.addResponsiveElementAndChangeElementProperty(parentNode, stylesByProperty)
+
+        document.body.appendChild(parentNode)
+
+    </script>
+
+    
+    
+</body>
+</html>
