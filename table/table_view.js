@@ -86,10 +86,6 @@ class Table_view{
     }
 
     
-
-    
-  
-
     createMainParentNode(){
 
         var mainParentNode = document.createElement("DIV")
