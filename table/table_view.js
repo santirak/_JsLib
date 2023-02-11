@@ -492,7 +492,7 @@ class Table_view{
         var all_cells =  this.styleForCells
         var all_specificCells = (headOrContent=="head")? this.styleForHeadCells : this.styleForContentCells 
         
-        var column_cells = column.Style
+        var column_cells = column.styleForCells
         var column_specificCells = (headOrContent=="head")? column.styleForHeadCells: column.styleForContentCells
         
         var styles = [all_cells, all_specificCells, column_cells, column_specificCells]
