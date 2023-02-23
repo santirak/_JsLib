@@ -22,9 +22,8 @@ export default class ThaiIdNumber_model {
 
 
     constructor() {
-        this.magicNumbers = new function(){
-            this.hyphenPositions = [1,5,10,12]
-        }
+    
+        this.hyphenPositions = [1,5,10,12]
     }
     
 
@@ -49,7 +48,7 @@ export default class ThaiIdNumber_model {
         // var isOk = this.checkId(thaiId)
         // if(isOk===false) return false
        
-        var hyphenPositions = this.magicNumbers.hyphenPositions
+        var hyphenPositions = this.hyphenPositions
         var thaiId_withHyphen = ""
         var i;
         for(i=0; i<thaiId.length; i++){

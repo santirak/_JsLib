@@ -39,14 +39,10 @@ export default class Responsive {
             
         this.responsiveElements = []
         
-        this.functionAfter_resizeScreen = function(screenSizeOrder){}
+        this.callback_resizeScreen = function(screenSizeOrder){}
 
         window.addEventListener("resize", this.changeElePropertyWhenResizeScreen.bind(this));
     }
-
-	
-	actionAfter_resize(screenSizeOrder){
-	}
 
 
     getBodyDimensions(){
@@ -126,8 +122,8 @@ export default class Responsive {
         return typeof window.ontouchstart !== 'undefined';
     }
 	
-	
-	changeElePropertyWhenResizeScreen(){
+
+	changeElePropertyWhenResizeScreen(callback = this.callback_resizeScreen){
 		
 		if(this.isTouchDevice()){ //Math.abs(-7.25)
 			
@@ -145,7 +141,7 @@ export default class Responsive {
         this.updateBodyDimension()
 
 		var screenSizeOrder = this.getScreenSizeOrder();
-		this.functionAfter_resizeScreen(screenSizeOrder);
+		callback(screenSizeOrder);
 
 	}
 	

@@ -17,10 +17,10 @@ export default class File_model{
 
 
     constructor() {
-        this.magicNumbers = new function(){
-            this.maxFileSize = 6000000; // "6 MB"; 
-            this.allowFileExtensions = ["jpg", "jpeg", "png"]
-        }
+       
+        this.maxFileSize = 6000000; // "6 MB"; 
+        this.allowFileExtensions = ["jpg", "jpeg", "png"]
+
     }
 
 
@@ -33,14 +33,14 @@ export default class File_model{
 
     checkFileSize(file){
         var isValid = false
-        if(file.size <= this.magicNumbers.maxFileSize){
+        if(file.size <= this.maxFileSize){
             isValid = true;
         }
 
         return {
             isValid: isValid,
             fileSize: file.size,
-            maxFileSize: this.magicNumbers.maxFileSize
+            maxFileSize: this.maxFileSize
         }
 
     }
@@ -49,7 +49,7 @@ export default class File_model{
     checkFileExtension(file){
         var fileExtension = this.getFileExtension(file)
         var isValid = false
-        if(this.magicNumbers.allowFileExtensions.includes(fileExtension))  isValid = true
+        if(this.allowFileExtensions.includes(fileExtension))  isValid = true
         return {
             isValid: isValid,
             fileExtension: fileExtension
