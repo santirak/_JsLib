@@ -6,17 +6,16 @@
 <body>
 
     this page for testing Table<br>
+
+    <!-- <script src="view.js"></script> -->
    
     <script type="module">
 
-        import {Table_view, Column_view} from "./table_view.js"
+        import {Table, TableColumn} from "./view.js"
         
-
-
-
         var Columns = []
 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "Column_1"
         column_view.contentKeyName = "column_1"
         column_view.styleForHeadCells = {
@@ -27,24 +26,24 @@
         
         Columns.push(column_view)
 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "Column_2"
         column_view.contentKeyName = "column_2"
         Columns.push(column_view)
 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "Column_3"
         column_view.contentKeyName = "column_3"
         Columns.push(column_view)
 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "Column_4"
         column_view.contentKeyName = "column_4"
         Columns.push(column_view)
 
 
 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "Column_5 Column 5 Column 5 Column 5 Column 5 Column 5 Column 5 Column 5 "
         column_view.contentKeyName = "column_5"
         column_view.contentType = 2
@@ -56,7 +55,7 @@
         //-- sub for column 2
         var subcolumns = []
         //-- subcontent 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "sub_1"
         column_view.contentKeyName = "sub_1"
         
@@ -69,26 +68,26 @@
         //-- sub ---------
         var subcolumns = []
         //-- subcontent 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "s_sub_1"
         column_view.contentKeyName = "sub_1"
         subcolumns.push(column_view)
 
 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "s_sub_2"
         column_view.contentKeyName = "sub_2"
         subcolumns.push(column_view)
 
 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "s_sub_3"
         column_view.contentKeyName = "sub_3"
 
         subcolumns.push(column_view)
 
 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "s_sub_4 sub_4 sub_4 sub_4 sub_4 sub_4 sub_4"
         column_view.contentKeyName = "sub_4"
         subcolumns.push(column_view)
@@ -103,19 +102,19 @@
         //-- sub ---------
         var subcolumns = []
         //-- subcontent 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "s_sub_1"
         column_view.contentKeyName = "sub_1"
         subcolumns.push(column_view)
 
 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "s_sub_2"
         column_view.contentKeyName = "sub_2"
         subcolumns.push(column_view)
 
 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "s_sub_3"
         column_view.contentKeyName = "sub_3"
 
@@ -128,7 +127,7 @@
         //-- sub ---------
         var subcolumns = []
         //-- subcontent 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "s_sub_1"
         column_view.contentKeyName = "sub_1"
         
@@ -145,19 +144,19 @@
 
         var subcolumns = []
         //-- subcontent 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "s_ssub_1"
         column_view.contentKeyName = "sub_1"
         subcolumns.push(column_view)
 
 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "s_ssub_2"
         column_view.contentKeyName = "sub_2"
         subcolumns.push(column_view)
 
 
-        var column_view = new Column_view()
+        var column_view = new TableColumn()
         column_view.name = "s_ssub_3"
         column_view.contentKeyName = "sub_3"
 
@@ -210,7 +209,7 @@
         
 
         
-        var table_view = new Table_view()
+        var table_view = new Table()
         console.log(Columns)
         console.log(TableContents)
         table_view.mainParentNode.style.height = "500px"
