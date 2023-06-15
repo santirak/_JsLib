@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+
+  <style>
+
+    /* .modal_mainParent{
+    } */
+
+    /* .modal_parent{ 
+        width: 300px;
+        padding: 24px;
+    }
+
+
+    .modal_contentParent{
+        
+    }
+    
+    .modal_headParent{
+
+    }
+
+    .modal_head{
+
+    }
+     */
+    /* .modal_buttonParent{
+
+    }
+    */
+
+    .button {
+        background-color: gray;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+    }
+
+  </style>
+</head>
+<body>
+
+
+    
+
+    this page for testing  Modal<br>
+
+
+   
+    
+    <script type="module">
+
+        import Modal from "./modal.js"
+
+        var modal = new Modal()
+        modal.createViews()
+        modal.showModal()
+
+
+        class AlertModal extends Modal{
+            constructor(){
+                super()
+                this.view.style_mainParent.backgroundColor = "lightblue"
+                // this.createViews()
+            }
+        }
+
+        var showButton = document.createElement("div")
+        showButton.className = "button"
+        showButton.innerHTML = "Show"
+        showButton.onclick = function(){
+            var alertModal = new AlertModal()
+            alertModal.createViews()
+            alertModal.showModal()
+        }
+
+        document.body.appendChild(showButton)
+        
+    </script>
+
+    
+    
+</body>
+</html>

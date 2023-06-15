@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+
+  <style>
+    .button {
+        background-color: gray;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+
+    
+
+    this page for testing  Dropdown<br>
+
+
+   
+    
+    <script type="module">
+
+        var buttonParent = document.createElement("div")
+        buttonParent.style.width = "400px"
+
+        var showButton = document.createElement("div")
+        showButton.className = "button"
+        showButton.innerHTML = "Show"
+        showButton.onclick = function(){
+           
+        }
+
+        buttonParent.appendChild(showButton)
+        document.body.appendChild(buttonParent)
+        
+
+        var elements = {
+            parentNode: buttonParent,
+            buttonNode: showButton
+        }
+
+        import Dropdown from "./dropdown.js"
+        var dropdown = new Dropdown(elements)
+        dropdown.createViews()
+      
+        
+        
+    </script>
+
+    
+    
+</body>
+</html>

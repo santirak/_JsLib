@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+
+  <style>
+    
+  </style>
+</head>
+<body>
+
+
+    
+
+    this page for testing  Dropdown<br>
+
+
+   
+    
+    <script type="module">
+
+
+
+        var parentNode = document.createElement("div")
+        parentNode.style.display = "inline-block"
+        parentNode.style.padding = "10px 10px"
+        parentNode.style.backgroundColor = "lightgray"
+        parentNode.innerHTML = "Button"
+        parentNode.oncontextmenu = function(event){
+            event.preventDefault();
+            console.log("oncontextmenu");
+        }
+        document.body.appendChild(parentNode)
+
+
+        var textNode = document.createElement("div")
+        // parentNode.style.width = "100%"
+        textNode.style.padding = "10px 10px"
+
+        document.body.appendChild(textNode)
+
+        
+       
+        import EventHandler from "./eventHandler.js"
+        var eventHandler = new EventHandler()
+
+        eventHandler.attachEventFunction(parentNode)
+        eventHandler.eventFunction_click = function(event){
+            textNode.innerHTML = "click"
+        }
+        eventHandler.eventFunction_hold = function(event){
+            textNode.innerHTML = "hold"
+        }
+        eventHandler.eventFunction_rightClick = function(event){
+            textNode.innerHTML = "right click"
+        }
+
+
+        
+    </script>
+
+    
+    
+</body>
+</html>

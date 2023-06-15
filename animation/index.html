@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+</head>
+<body>
+
+    this page for testing ...<br>
+ 
+
+    <script type="module">
+
+
+        import ChangeElementDimensions from "./changeElementDimensions.js"
+        var changeElementDimensions = new ChangeElementDimensions()
+
+        var mainParent = document.createElement("DIV")
+        mainParent.style.width = "100%"
+        mainParent.style.float = "left"
+        mainParent.style.margin = "10px 0px"
+
+        var isDisplayed = false
+        var buttonNode = document.createElement("DIV")
+        buttonNode.style.padding = "8px"
+        buttonNode.style.cursor = "pointer"
+        buttonNode.innerHTML = "ChangeElementDimensions: Toggle"
+        buttonNode.onclick = function(){
+            if(isDisplayed){
+                changeElementDimensions.changeSize(changeDimension_parentNode, "width", 400, 0)
+            }
+            else{
+                changeElementDimensions.changeSize(changeDimension_parentNode, "width", 0, 400)
+            }
+            isDisplayed = !isDisplayed
+        }
+        mainParent.appendChild(buttonNode)
+
+
+        var parentNode = document.createElement("DIV")
+        parentNode.style.height = "100px"
+        parentNode.style.width = "200px"
+        parentNode.style.float = "left"
+        parentNode.style.backgroundColor = "pink"
+        parentNode.innerHTML = "0--------"
+        var changeDimension_parentNode = parentNode
+        mainParent.appendChild(parentNode)
+
+        document.body.appendChild(mainParent)
+
+        
+
+        // ------------------------------------------------------
+
+        import ChangeElementDisplaying from "./changeElementDisplaying.js"
+        var changeElementDisplaying = new ChangeElementDisplaying()
+
+
+        var mainParent = document.createElement("DIV")
+        mainParent.style.width = "100%"
+        mainParent.style.float = "left"
+        mainParent.style.margin = "10px 0px"
+
+        var isDisplayed_1 = true
+        var buttonNode = document.createElement("DIV")
+        buttonNode.style.padding = "8px"
+        buttonNode.style.cursor = "pointer"
+        buttonNode.innerHTML = "ChangeElementDisplaying: Toggle"
+        buttonNode.onclick = function(){
+            isDisplayed_1 = !isDisplayed_1
+            changeElementDisplaying.changeDisplaying(changeDisplaying_parentNode, isDisplayed_1, "vertical")
+        }
+        mainParent.appendChild(buttonNode)
+
+
+        
+
+
+        var parentNode = document.createElement("DIV")
+        parentNode.style.height = "100px"
+        parentNode.style.width = "200px"
+        parentNode.style.float = "left"
+        parentNode.style.backgroundColor = "pink"
+        parentNode.innerHTML = "1--------"
+
+        var changeDisplaying_parentNode = parentNode
+        mainParent.appendChild(parentNode)
+        document.body.appendChild(mainParent)
+
+        
+
+    </script>
+
+    
+    
+</body>
+</html>

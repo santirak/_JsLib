@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+
+  <style>
+    
+  </style>
+</head>
+<body>
+
+
+    
+
+    this page for testing  Dropdown<br>
+
+
+   
+    
+    <script type="module">
+
+        var items = []
+
+        var parentNode = document.createElement("div")
+        parentNode.style.width = "300px"
+        parentNode.style.height = "300px"
+        parentNode.style.float = "left"
+        parentNode.style.overflow = "scroll"
+        
+        for(var i=0; i<15; i++){
+            var itemNode = document.createElement("div")
+            itemNode.style.width = "100%"
+            itemNode.style.float = "left"
+            itemNode.style.padding = "8px 0px"
+            itemNode.style.backgroundColor = "pink"
+            itemNode.style.border = "1px solid lightgray"
+            
+
+            var buttonNode = document.createElement("div")
+            buttonNode.style.display = "inline-block"
+            buttonNode.style.float = "right"
+            buttonNode.style.padding = "8x"
+            buttonNode.style.backgroundColor = "lightblue"
+            buttonNode.innerHTML = "Button"
+            buttonNode.draggable = true
+            itemNode.appendChild(buttonNode)
+
+            var textNode = document.createElement("div")
+            textNode.style.display = "inline-block"
+            textNode.innerHTML = i
+
+            itemNode.appendChild(textNode)
+
+
+            items.push({
+                id: i,
+                dragButtonNode: buttonNode,
+                itemParentNode: itemNode
+            })
+
+            parentNode.appendChild(itemNode)
+
+        }
+        
+
+        document.body.appendChild(parentNode)
+
+
+
+        
+       
+        import DragableList from "./dragableList.js"
+        var dragableList = new DragableList(items, parentNode)
+
+        
+    </script>
+
+    
+    
+</body>
+</html>

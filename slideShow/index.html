@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+
+  <style>
+    
+  </style>
+</head>
+<body>
+
+
+    
+
+    this page for testing  Dropdown<br>
+
+
+   
+    
+    <script type="module">
+
+
+
+        var mainParentNode = document.createElement("div")
+        mainParentNode.style.width = "600px"
+        mainParentNode.style.height = "400px"
+        mainParentNode.style.float = "left"
+        mainParentNode.style.position = "relative"
+        mainParentNode.style.overflow = "hidden"
+
+
+        
+
+        var slides = []
+        var slideColors = ["lightblue", "lightgreen", "orange", "pink"]
+        var slideImages = ["radial-gradient(red, green, blue)", "radial-gradient(orange, lightblue, pink)", "radial-gradient(lightblue, red, lightgreen)", "radial-gradient(black, white, yellow)"]
+
+        for(var i=0; i<slideColors.length; i++){
+            var slideNode = document.createElement("div")
+            slideNode.style.width = "100%"
+            slideNode.style.height = "100%"
+            slideNode.style.position = "absolute"
+            // slideNode.style.backgroundColor = slideColors[i]
+            slideNode.style.backgroundImage = slideImages[i]
+            slideNode.innerHTML = i
+
+            mainParentNode.appendChild(slideNode)
+
+            slides[i] = {
+                order: i,
+                slideNode: slideNode,
+                dotNode: "none"
+            }
+        }
+
+        
+        //-- left / right button
+        var leftArrowNode = document.createElement("div")
+        leftArrowNode.style.cursor = "pointer"
+        leftArrowNode.style.position = "absolute"
+        leftArrowNode.style.top = "50%"
+        leftArrowNode.style.left = "5%"
+        leftArrowNode.style.transform = "translate(0%, -50%)"
+        leftArrowNode.innerHTML = "P"
+        mainParentNode.appendChild(leftArrowNode)
+
+
+        var rightArrowNode = document.createElement("div")
+        rightArrowNode.style.cursor = "pointer"
+        rightArrowNode.style.position = "absolute"
+        rightArrowNode.style.top = "50%"
+        rightArrowNode.style.right = "5%"
+        rightArrowNode.style.transform = "translate(0%, -50%)"
+        rightArrowNode.innerHTML = "N"
+        mainParentNode.appendChild(rightArrowNode)
+
+
+        //-- dot
+        var dotParent = document.createElement("div")
+        dotParent.style.width = "100%"
+        dotParent.style.position = "absolute"
+        dotParent.style.bottom = "0%"
+        dotParent.style.left = "0%"
+        dotParent.style.textAlign = "center"
+
+        for(var i=0; i<slideColors.length; i++){
+            var dotNode = document.createElement("div")
+            dotNode.style.display = "inline-block"
+            dotNode.style.padding = "8px"
+            dotNode.style.margin = "8px"
+            dotNode.style.cursor = "pointer"
+            dotNode.innerHTML = i
+
+            dotParent.appendChild(dotNode)
+
+            slides[i].dotNode = dotNode
+        }
+
+
+        mainParentNode.appendChild(dotParent)
+
+        document.body.appendChild(mainParentNode)
+
+
+       
+        import SlideShow from "./slideShow.js"
+        var slideShow = new SlideShow(slides, mainParentNode, {
+            leftArrowNode: leftArrowNode,
+            rightArrowNode: rightArrowNode,
+            navigatorParent: dotParent
+        })
+        
+      
+        
+        
+    </script>
+
+    
+    
+</body>
+</html>
