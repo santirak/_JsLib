@@ -19,8 +19,22 @@ export default class View{
     constructor(viewController, options = {}) {
 
 
-        this.haveCloseIcon = false
+        
 
+
+        //-- create defaul style
+
+        this.elementStyle = {
+            style_mainParent: {},
+            style_modalParent: {},
+            style_closeIcon: {},
+            style_headParent: {},
+            style_contentParent: {},
+            style_buttonParent: {},
+            style_closeButton: {}
+        }
+
+        
         //-- get option value
         for(var key in options){
             this[key] =options[key]
@@ -31,14 +45,7 @@ export default class View{
         this.viewController = viewController
 
 
-        //-- create defaul style
-        this.style_mainParent = this.createStyle_mainParent()
-        this.style_modalParent = this.createStyle_modalParent()
-        this.style_closeIcon = this.createStyle_closeIcon()
-        this.style_headParent = this.createStyle_headParent()
-        this.style_contentParent = this.createStyle_contentParent()
-        this.style_buttonParent = this.createStyle_buttonParent()
-        this.style_closeButton = this.createStyle_closeButton()
+        
 
 
     }
@@ -46,7 +53,9 @@ export default class View{
 
     //-- view creator ---------
 
-    createElements(){
+    createElements(elementStyle={}){
+
+        this.elementStyle = elementStyle
 
         var mainParentNode = this.createMainParentNode()
 
@@ -54,7 +63,7 @@ export default class View{
 
 
         //--close icon 
-        if(this.haveCloseIcon){
+        if(this.viewController.haveCloseIcon){
             var closeIconNode = this.createCloseIconNode()
             modalParent.appendChild(closeIconNode)
         }
@@ -88,12 +97,6 @@ export default class View{
     }
 
 
-    createStyle_mainParent(){
-        return {
-            backgroundColor: "rgba(80,80,80,0.4)"
-            // backgroundColor: "red"
-        }
-    }
 
     createMainParentNode(){
         var mainParentNode = document.createElement("div");
@@ -104,7 +107,7 @@ export default class View{
 		mainParentNode.style.left = "0px";
 		mainParentNode.style.top = "0px";
 		mainParentNode.style.display = "none";
-        mainParentNode.className = "modal_mainParent"
+		mainParentNode.style.backgroundColor = "rgba(80,80,80,0.4)"
         mainParentNode.onmouseup = (event) => {
             var clickElement = event.target;
             if(clickElement==mainParentNode){
@@ -112,7 +115,7 @@ export default class View{
             }  
         }
 
-        this.setElementStyle(mainParentNode, this.style_mainParent)
+        this.setElementStyle(mainParentNode, this.elementStyle.style_mainParent)
 
         this.mainParentNode = mainParentNode
 
@@ -120,53 +123,40 @@ export default class View{
     }
 
 
-    createStyle_modalParent(){
-        return {
-            width: "300px",
-            backgroundColor: "white",
-            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-            padding: "12px",
-            borderRadius: "8px",
-            position: "relative"
-        }
-    }
-
     createModalParentNode(){
 
         var modalParent = document.createElement("div");
+		modalParent.style.width = "300px";
+		modalParent.style.backgroundColor = "white";
+		modalParent.style.boxShadow = "0px 0px 10px rgba(0, 0, 0, 0.1)";
+		modalParent.style.padding = "12px";
 		modalParent.style.position = "absolute";
 		modalParent.style.top = "50%"
 		modalParent.style.left = "50%"
 		modalParent.style.transform = "translate(-50%, -50%)"
 		modalParent.style.overflow = "hidden"
-        modalParent.className = "modal_parent"
         
-        this.setElementStyle(modalParent, this.style_modalParent)
+        this.setElementStyle(modalParent, this.elementStyle.style_modalParent)
 
         return modalParent
 
     }
 
 
-    createStyle_closeIcon(){
-        return {
-            width: "15px",
-            top: "8px",
-            right: "8px",
-            stroke: "dimgray",
-            strokeWidth: "8px",
-            cursor: "pointer"
-        }
-    }
-
     createCloseIconNode(){
         var closeIconNode = document.createElement("div");
 		closeIconNode.style.position = "absolute";
+		closeIconNode.style.width = "15px";
+		closeIconNode.style.top = "8px";
+		closeIconNode.style.right = "8px";
+		closeIconNode.style.stroke = "stroke";
+		closeIconNode.style.strokeWidth = "8px";
+		closeIconNode.style.cursor = "cursor";
 		closeIconNode.innerHTML = '<svg style="display: block;" height="" width="100%" viewBox = "0,0,48,48" ><path d="M2 2 L46 46 M2 46 L46 2" stroke-linecap="round" stroke-width="4" fill="none"/></svg>'
         closeIconNode.onclick = () => {
             this.viewController.hideModal()
         }
-        this.setElementStyle(closeIconNode, this.style_closeIcon)
+        this.setElementStyle(closeIconNode, this.elementStyle.style_closeIcon)
 
         return closeIconNode
     }
@@ -174,19 +164,13 @@ export default class View{
 
 
 
-    createStyle_headParent(){
-        return {
-        }
-    }
-
     createHeadParentNode(){
         
         var headParentNode = document.createElement("div");
 		headParentNode.style.width = "100%";
 		headParentNode.style.float = "left"
-        headParentNode.className = "modal_headParent"
 
-        this.setElementStyle(headParentNode, this.style_headParent)
+        this.setElementStyle(headParentNode, this.elementStyle.style_headParent)
 
         this.headParentNode = headParentNode
 
@@ -196,18 +180,13 @@ export default class View{
 
 
 
-    createStyle_contentParent(){
-        return {
-        }
-    }
 
     createContentParentNode(){
         var contentParentNode = document.createElement("div");
 		contentParentNode.style.width = "100%";
 		contentParentNode.style.float = "left"
-        contentParentNode.className = "modal_contentParent"
 
-        this.setElementStyle(contentParentNode, this.style_contentParent)
+        this.setElementStyle(contentParentNode, this.elementStyle.style_contentParent)
 
         this.contentParentNode = contentParentNode
 
@@ -216,19 +195,14 @@ export default class View{
 
 
 
-    createStyle_buttonParent(){
-        return {}
-    }
-
 
     createButtonParentNode(){
         
         var buttonParentNode = document.createElement("div");
 		buttonParentNode.style.width = "100%";
 		buttonParentNode.style.float = "left"
-        buttonParentNode.className = "modal_buttonParent"
 
-        this.setElementStyle(buttonParentNode, this.style_buttonParent)
+        this.setElementStyle(buttonParentNode, this.elementStyle.style_buttonParent)
         
         this.buttonParentNode = buttonParentNode
 
@@ -240,31 +214,9 @@ export default class View{
 
     
 
-    createHeadNode(headText){
-
-        var headParentNode = this.headParentNode
-        headParentNode.innerHTML = ""
-
-        var headNode = document.createElement("div");
-		headNode.style.display = "inline-block";
-		headNode.className = "modal_head"
-		headNode.innerHTML = headText
-        this.headNode = headNode
-
-        headParentNode.appendChild(headNode)
-
-    }
-
 
 
     
-
-    createStyle_closeButton(){
-        return {
-            float: "right",
-            backgroundColor: "gray"
-        }
-    }
 
 
     createCloseButtonNode(text = "Close"){
@@ -272,18 +224,22 @@ export default class View{
         var closeButtonNode = document.createElement("div");
 		closeButtonNode.style.display = "inline-block";
 		closeButtonNode.style.cursor = "pointer";
-		closeButtonNode.className = "button";
+		closeButtonNode.style.float = "right";
+		closeButtonNode.style.padding = "8px";
+		closeButtonNode.style.backgroundColor = "gray";
 		closeButtonNode.innerHTML = text
         closeButtonNode.onclick = () => {
             this.viewController.hideModal()    
         }
 
-        this.setElementStyle(closeButtonNode, this.style_closeButton)
+        this.setElementStyle(closeButtonNode, this.elementStyle.style_closeButton)
 
         this.closeButtonNode = closeButtonNode
 
         return closeButtonNode
     }
+
+
 
 
     setElementStyle(element, styles){

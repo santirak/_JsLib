@@ -18,7 +18,8 @@ export default class Model{
     constructor(options={}){
 
         //--setting -----
-        this.isDisplaying = false
+        this.haveCloseIcon = false
+        
 
         //-- get option value
         for(var key in options){
@@ -27,10 +28,12 @@ export default class Model{
 
         //-- view 
         this.view = new View(this, options)
+
+        this.isDisplaying = false
     }
 
-    createViews(){
-        this.view.createElements()
+    createViews(elementStyle={}){
+        this.view.createElements(elementStyle)
     }
 
     //--view action

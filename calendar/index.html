@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <style>
+
+    
+    html {
+		box-sizing: border-box
+	}*,*:before,*:after {
+		box-sizing: inherit
+	}
+
+    body {
+        font-size: 14px;
+    }
+
+    .material-symbols-outlined {
+        font-variation-settings:
+            'FILL' 0,
+            'wght' 100,
+            'GRAD' 0,
+            'opsz' 48
+    }
+
+  </style>
+</head>
+<body>
+
+
+    
+
+    this page for testing  input with form input<br>
+
+
+   
+    
+    <script type="module">
+
+        import Calendar from "./calendar.js"
+
+
+        var calendar = new Calendar()
+
+        var style_input = {
+            backgroundColor: "lightgreen",
+            border: "1px solid pink"
+        }
+
+        var returnElements = calendar.createViews({style_input: style_input})
+        document.body.appendChild(returnElements.mainParentNode)
+
+        console.log(calendar)
+
+        calendar.setSelectedDate(new Date(2023, 7, 13))
+
+
+    </script>
+
+    
+    
+</body>
+</html>

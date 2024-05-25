@@ -24,34 +24,37 @@ export default class View{
 
     
 
-    constructor(viewController, elements, options={}) {
+    constructor(viewController, options={}) {
 
-        // console.log("constructor")
+       
 
-        this.parentNode = elements.parentNode
-        this.buttonNode = elements.buttonNode
+        
 
-        this.parentNode.style.position = "relative"
+        
 
 
         //-- setting ----
         // this.isDisplaying = false
         this.createDropdownPointer = false;
         
-        
+
         //-- get option value
         for(var key in options){
             this[key] =options[key]
         }
+        
+        
 
         //-- view
         this.viewController = viewController
 
 
 
-        //-- create defaul style
-        this.style_dropdownParent = this.createStyleForDropdownParent()
-        this.style_pointer = this.createStylePointer()
+        //-- style
+        this.elementStyle = {
+            style_dropdownParent: {},
+            style_pointer: {}
+        }
 
     }
 
@@ -59,54 +62,85 @@ export default class View{
 
 
     
-    createElements(){
+    createElements(elementStyle = {}, elements){
+        // this.elements = elements
+
+        // console.log("createElements().elements: ")
+        // console.log(elements)
+
+        this.elementStyle = elementStyle
+
+        this.elementsForPreventHideDropdown = []
+        for(var key in elements){
+            this.elementsForPreventHideDropdown.push(elements[key])
+        }
+
+        this.parentNode = elements.parentNode
+        this.buttonNode = elements.buttonNode
+        this.parentNode.style.position = "relative"
+
         
-        var parentNode = this.parentNode
+        // var parentNode = this.parentNode
+        
 
         var dropdownParentNode = this.createDropdownParentNode()
-        parentNode.appendChild(dropdownParentNode)
+        this.parentNode.appendChild(dropdownParentNode)
 
         if(this.createDropdownPointer){
             var pointerNode = this.createPointerNode()
-            parentNode.appendChild(pointerNode) 
+            this.parentNode.appendChild(pointerNode) 
         }
         
 
-        var buttonNode = this.buttonNode
-        buttonNode.onclick = () => {
-            this.viewController.toggleDropdown()
+        // var buttonNode = this.buttonNode
+        this.buttonNode.onclick = () => {
+            console.log("click button to show dropdown")
+            if(this.viewController.clickButtonTo == "show"){
+                this.viewController.showDropdown()
+            }   
+            else {
+                this.viewController.toggleDropdown()
+            }
+
+            
         }
 
         this.changeDropdownDisplaying()
 
-    }
-
-
-
-
-    //-- view creators ----------------------------
-    createStyleForDropdownParent(){
         return {
-            width: "100%",
-            backgroundColor: "white",
-            // padding: "12px",
-            top: "100%",
-            left: "0%",
-            borderRadius: "8px",
-            boxShadow: "0px 0px 6px rgba(0, 0, 0, 0.3)"
+            dropdownParentNode: dropdownParentNode
         }
+
     }
+
+
+
+
+    
 
 
     createDropdownParentNode(){
 
-        var dropdownParentNode = document.createElement("DIV");
+        var dropdownParentNode = document.createElement("DIV");        
+        dropdownParentNode.style.width = "100%";
         dropdownParentNode.style.position = "absolute";
+        dropdownParentNode.style.top = "105%";
+        dropdownParentNode.style.left = "0%";
         dropdownParentNode.style.cursor = "default";
+        dropdownParentNode.style.zIndex = "5";
+        dropdownParentNode.style.maxHeight = "300px"
+        dropdownParentNode.style.backgroundColor = "white"
+        dropdownParentNode.style.boxShadow =  "0px 0px 6px rgba(0, 0, 0, 0.3)";
+        dropdownParentNode.style.overflow = "scroll"
+        // dropdownParentNode.style.overflowX = "visible"
+
+        
+        // dropdownParentNode.style.fontSize = "inherit"
+        // dropdownParentNode.style.fontFamily = "inherit"
         dropdownParentNode.innerHTML = "innerHTML";
 
 
-        this.setElementStyle(dropdownParentNode, this.style_dropdownParent)
+        this.setElementStyle(dropdownParentNode, this.elementStyle.style_dropdownParent)
 
         //--dec 
         // dropdownParentNode.style.width = "200px";
@@ -124,19 +158,8 @@ export default class View{
 
 
 
-    createStylePointer(){
-        return {
-            top: "100%",
-            left: "20px",
-            // borderRadius: "8px",
-            borderColor: "transparent transparent red transparent"
-        }
-    }
-
-
    
     createPointerNode(){
-
 
         var pointerNode = document.createElement("DIV");
         // pointerNode.style.display = "none";
@@ -144,10 +167,14 @@ export default class View{
         pointerNode.style.height = "0px";
         pointerNode.style.borderWidth = "10px";
         pointerNode.style.borderStyle = "solid";
+        pointerNode.style.top = "100%";
+        pointerNode.style.left = "20px";
+        pointerNode.style.borderRadius = "8px";
+        pointerNode.style.borderColor = "transparent transparent red transparent";
         pointerNode.style.cursor = "default";
         pointerNode.innerHTML = " "
 
-        this.setElementStyle(pointerNode, this.style_pointer)
+        this.setElementStyle(pointerNode, this.elementStyle.style_pointer)
 
         this.pointerNode = pointerNode;
 
@@ -218,6 +245,22 @@ export default class View{
     
 
 
+    removeDefaultEvent_mouseDown_dropdownParent(){
+        this.dropdownParentNode.onmousedown = function(event){
+            event.preventDefault();
+        }
+    }
+
+    removeClickEventToShowDropDown(){
+        this.buttonNode.onclick = function(){}
+    }
+
+
+    setDrowdownConent(element){
+        this.dropdownParentNode.innerHTML = ""
+        this.dropdownParentNode.appendChild(element)
+    }
+    
 
 
 
@@ -226,49 +269,6 @@ export default class View{
 
 
 
-
-
-    // //-- view actions ----------------------------
-    // showDropdown(){
-    //     this.isDisplaying = true
-    //     this.changeDropdownDisplaying()
-
-    //     //--add event listener
-    //     window.addEventListener("click", this.function_clickOtherAreaToHideDropDownContent = (event)=>{
-    //         // console.log("Listenning")
-    //         var clickInParent = ActionEvent.checkClickOnChildOfParents(event, [this.parentNode, this.buttonNode])
-    //         if(!clickInParent){
-    //             this.hideDropdown()
-    //         }
-    //     });
-
-    //     //-- change location
-    //     this.changeDropdownLocationRelateToParentLocation()
-
-
-    // }
-
-    // hideDropdown(){
-    //     // console.log("Stop Listenning")
-    //     this.isDisplaying = false
-    //     this.changeDropdownDisplaying(false)
-        
-    //     //--remove event listener
-    //     window.removeEventListener("click", this.function_clickOtherAreaToHideDropDownContent)
-
-
-    // }
-
-    // toggleDropdown(){
-
-    //     if(this.isDisplaying){
-    //         this.hideDropdown()
-    //     }
-    //     else{
-    //         this.showDropdown()
-    //     }
-    // }
-
-
+    
 }
 

@@ -1,4 +1,6 @@
 import EventHandler from "../eventHandler/eventHandler.js"
+import Responsive from "../responsive/responsive.js"
+
 import View from "./view.js"
 
 export default class Dropdown{
@@ -9,10 +11,7 @@ export default class Dropdown{
    
     STRUCTURE
 
-        elements = {
-            parentNode: ,
-            buttonNode
-        }
+
 
     CUSTOMIZATION
 
@@ -25,13 +24,12 @@ export default class Dropdown{
     */
 
     
-    constructor(elements, options={}) {
+    constructor(options={}) {
 
-        this.elements = elements
+        
 
         //--settting
-        this.isDisplaying = false
-        this.isDisabled = false;
+        this.clickButtonTo = "toggle" //-- show, toggle
         this.clickOutsideToHide = true
         
         //-- get option value
@@ -40,42 +38,113 @@ export default class Dropdown{
         }
 
         //-- view 
-        this.view = new View(this, elements, options)
+        this.view = new View(this, options)
         
 
         //-- utility
+        this.isDisplaying = false
+        this.isDisabled = false;
         this.eventFunction_clickOtherAreaToHideDropdownContent
+        this.eventFunction_touchStart_OtherAreaToHideDropdownContent
+
+
+        //-- function
+        this.afterFunction_hideDropdown = () => {}
+        this.functionForClickOutSide = () => {
+            this.hideDropdown()
+        }
 
     }
 
 
-    createViews(){
-        this.view.createElements()
+    createViews(elementStyle={}, elements){
+        return this.view.createElements(elementStyle, elements)
     }
 
     addListenerForHideWhenClickOther(){
 
+        console.log("add Listener ForHideWhenClick Other()")
+
         if(!this.clickOutsideToHide) return
 
-        var elements = []
-        for(var key in this.elements){
-            elements.push(this.elements[key])
+        
+        if(Responsive.isTouchDevice()){
+            
+            this.remove_touchStart_listener()
+
+            console.log("attach touch start")
+            window.addEventListener("touchstart", this.eventFunction_touchStart_OtherAreaToHideDropdownContent = (event)=>{
+                console.log("touch start")
+
+                //-- prevent multi touch
+                if(event.touches.length > 1){
+                    console.log("multiTouch")
+                    this.remove_touchEnd_listener()
+                    this.remove_touchMove_listener()
+                }
+
+                console.log("attach touch touchend")
+                window.addEventListener("touchend", this.eventFunction_touchEnd_OtherAreaToHideDropdownContent = (event)=>{
+                    console.log("touch end")
+                    this.checkClickOnChildOfParents(event)
+                    this.remove_touchEnd_listener()
+                    this.remove_touchMove_listener()
+                });
+
+                console.log("attach touch touchmove")
+                window.addEventListener("touchmove", this.eventFunction_touchMove_OtherAreaToHideDropdownContent = (event)=>{
+                    console.log("touch move")
+                    this.remove_touchEnd_listener()
+                    this.remove_touchMove_listener()
+                });
+                
+            });
+            
+        }
+        else{
+            
+            this.remove_mouseDown_listener()
+            /* use "mousedown" rather than "click" to prevent hide when mouse is dragged from inside to outside and release*/
+            window.addEventListener("mousedown", this.eventFunction_clickOtherAreaToHideDropdownContent = (event)=>{
+                this.checkClickOnChildOfParents(event)
+            });
         }
         
-        this.removeListenerForHideWhenClickOther()
-        window.addEventListener("click", this.eventFunction_clickOtherAreaToHideDropdownContent = (event)=>{
-            var clickInParent = EventHandler.checkClickOnChildOfParents(event, elements)
-            if(!clickInParent){
-                this.hideDropdown()
-            }
-        });
+    }
+
+
+    checkClickOnChildOfParents(event){
+
+        console.log("check out side")
+        var clickInParent = EventHandler.checkClickOnChildOfParents(event, this.view.elementsForPreventHideDropdown)
+        if(!clickInParent){
+            console.log("outside")
+            this.functionForClickOutSide()
+        }
     }
  
 
-    removeListenerForHideWhenClickOther(){
-        window.removeEventListener("click", this.eventFunction_clickOtherAreaToHideDropdownContent)
+    remove_mouseDown_listener(){
+        console.log("remove mousedown")
+        window.removeEventListener("mousedown", this.eventFunction_clickOtherAreaToHideDropdownContent)
     }
 
+    remove_touchStart_listener(){
+        console.log("remove touchStart")
+        window.removeEventListener("touchstart", this.eventFunction_touchStart_OtherAreaToHideDropdownContent)
+    }
+
+    remove_touchEnd_listener(){
+        console.log("remove touchend")
+        window.removeEventListener("touchend", this.eventFunction_touchEnd_OtherAreaToHideDropdownContent)
+        
+    }
+
+    remove_touchMove_listener(){
+        console.log("remove touchmove")
+        window.removeEventListener("touchmove", this.eventFunction_touchMove_OtherAreaToHideDropdownContent)
+        
+    }
 
     showDropdown(){
         
@@ -101,7 +170,11 @@ export default class Dropdown{
         this.view.changeDropdownDisplaying()
         
         //--remove event listener
-        this.removeListenerForHideWhenClickOther()
+        this.remove_mouseDown_listener()
+        this.remove_touchStart_listener()
+
+        
+        this.afterFunction_hideDropdown()
 
     }
 
@@ -112,6 +185,11 @@ export default class Dropdown{
         else{
             this.showDropdown()
         }
+    }
+
+
+    setDrowdownConent(element){
+        this.view.setDrowdownConent(element)
     }
 
 

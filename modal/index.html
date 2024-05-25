@@ -54,15 +54,20 @@
 
         import Modal from "./modal.js"
 
+
+        var elementStyle = {
+            style_modalParent: {
+                backgroundColor: "lightblue"
+            }
+        }
         var modal = new Modal()
-        modal.createViews()
+        modal.createViews(elementStyle)
         modal.showModal()
 
 
         class AlertModal extends Modal{
             constructor(){
                 super()
-                this.view.style_mainParent.backgroundColor = "lightblue"
                 // this.createViews()
             }
         }

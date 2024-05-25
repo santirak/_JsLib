@@ -11,10 +11,10 @@ class Table{
         _   use borderSpacing = "0px" instead of borderCollapse = "collapse"
 
         -   priority of table cell style is 
-                1. this.styleForCells
-                2. this.styleForHeadCells or this.styleForContentCells
-                3. column.styleForCells
-                4. column.styleForHeadCells  column.styleForContentCells
+                1. this.style_cells
+                2. this.style_headCells or this.style_contentCells
+                3. column.style_cells
+                4. column.style_headCells  column.style_contentCells
 
         -   to make table always stays at least full width, set tableNode.style.minWidth = "100%" 
             meaning: 
@@ -31,19 +31,19 @@ class Table{
         -   to change dimensions of table view, change size of mainparentNode
 
         for table cells style
-        -   to change style of all cells in table, edit this.styleForCells
-        -   to change style of all content cells, edit this.styleForHeadCells
-        -   to change style of all head cells, edit this.styleForContentCells
+        -   to change style of all cells in table, edit this.style_cells
+        -   to change style of all content cells, edit this.style_contentCells
+        -   to change style of all head cells, edit this.style_headCells
         
         for column cells style
         -   to change style of cells in column , edit column.Style
-        -   to change style of only content cells in a column, edit column.styleForHeadCells
-        -   to change style of only head cells in a column, edit column.styleForContentCells
+        -   to change style of only content cells in a column, edit column.style_headCells
+        -   to change style of only head cells in a column, edit column.style_contentCells
 
         -   to make table alway extend to full width when table width is smaller than parent width,  set this.isTableAlwayFullParentWidth
 
         -   to set width of column set 
-                column.styleForHeadCells = {
+                column.style_headCells = {
                     minWidth: "100px",
                     maxWidth: "100px"
                 }
@@ -58,22 +58,24 @@ class Table{
         
     */
 
-    constructor(){
+    constructor(viewController="none", options={}){
 
-        this.styleForCells = {
+        this.style_cells = {
             borderWidth: "0.5px",
             borderStyle: "solid",
             borderColor: "lightgray",
             padding: "4px"
         }
     
-        this.styleForHeadCells = {
+        this.style_headCells = {
             backgroundColor: "#f2f2f2"
         }
     
-        this.styleForContentCells = {
+        this.style_contentCells = {
         }
     
+
+
         this.isHeadFixed = true
         this.isFirstColumnFixed = true 
         this.isTableAlwayFullParentWidth = true;
@@ -81,6 +83,12 @@ class Table{
         this.columns = []
         this.headRows = []
         this.contentRowsById = {}
+
+        //-- get option value
+        for(var key in options){
+            this[key] =options[key]
+        }
+
 
         this.createMainParentNode()
     }
@@ -102,7 +110,7 @@ class Table{
     }
 
 
-    createTable(columns, tableContents){
+    createElements(columns, tableContents){
 
         this.mainParentNode.innerHTML = ""
         this.columns = columns
@@ -158,7 +166,7 @@ class Table{
         
         if(!this.isHeadFixed) return
 
-        //-- ** make thead sticky will keep all sub head stay at their position without setting top position to all head cells
+        //-- ** code below: make thead sticky will keep all sub head stay at their position without setting top position to all head cells
         theadNode.style.position = "sticky"
         theadNode.style.top = "0px"
         theadNode.style.zIndex = 1
@@ -489,11 +497,11 @@ class Table{
 
         //-- apply general style  and then apply head of content style
 
-        var all_cells =  this.styleForCells
-        var all_specificCells = (headOrContent=="head")? this.styleForHeadCells : this.styleForContentCells 
+        var all_cells =  this.style_cells
+        var all_specificCells = (headOrContent=="head")? this.style_headCells : this.style_contentCells 
         
-        var column_cells = column.styleForCells
-        var column_specificCells = (headOrContent=="head")? column.styleForHeadCells: column.styleForContentCells
+        var column_cells = column.style_cells
+        var column_specificCells = (headOrContent=="head")? column.style_headCells: column.style_contentCells
         
         var styles = [all_cells, all_specificCells, column_cells, column_specificCells]
 
@@ -610,9 +618,9 @@ class TableColumn{
         this.name = "Colunn name"
         this.contentKeyName = "none"
         this.contentType = 1 //-- 1 = normal text, 2 = html node
-        this.styleForCells = {} //--general
-        this.styleForHeadCells = {}
-        this.styleForContentCells = {}
+        this.style_cells = {} //--general
+        this.style_headCells = {}
+        this.style_contentCells = {}
         this.isDisplay = true
         this.subcolumns = []
     }

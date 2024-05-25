@@ -18,7 +18,7 @@
         var column_view = new TableColumn()
         column_view.name = "Column_1"
         column_view.contentKeyName = "column_1"
-        column_view.styleForHeadCells = {
+        column_view.style_headCells = {
             backgroundColor: "pink",
             minWidth: "150px",
             maxWidth: "150px"
@@ -218,7 +218,7 @@
         document.body.appendChild(table_view.mainParentNode)
 
 
-        table_view.createTable(Columns, TableContents);
+        table_view.createElements(Columns, TableContents);
 
 
         //--test insert new low

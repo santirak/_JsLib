@@ -28,6 +28,7 @@
 
         var buttonParent = document.createElement("div")
         buttonParent.style.width = "400px"
+        // buttonParent.style.fontSize = "60px"
 
         var showButton = document.createElement("div")
         showButton.className = "button"
@@ -46,8 +47,8 @@
         }
 
         import Dropdown from "./dropdown.js"
-        var dropdown = new Dropdown(elements)
-        dropdown.createViews()
+        var dropdown = new Dropdown()
+        dropdown.createViews({}, elements)
       
         
         
