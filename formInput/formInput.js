@@ -17,16 +17,15 @@ export default class FormInput{
     */
 
 
+    constructor(){
 
-    
-
-    constructor(options={}){
-
-        //--setting ------------
+        // --setting ------------
         this.allowEmpty = false
         this.valueType = "text" 
         this.placeholder = ""
+
         /* 
+            -- options:
             text
             numeric (no dot)
             decimal
@@ -34,31 +33,25 @@ export default class FormInput{
             url
             thaiIdNumber
             thaiPhoneNumber
-
         */
 
-            
-        this.validStyle = {
-            true: {borderColor: ""},
-            false: {borderColor: "red"}
-        }
         
-        
-        
-        this.thaiIdNumber = new ThaiIdNumber()
-        this.thaiPhoneNumber = new ThaiPhoneNumber()
-        
+        //-- for getting value from input
+        this.trimValue = true;
+        this.removeSpace = false
 
-
-        //-- for thaiPhoneNumber
+  
+        //-- property of thaiPhoneNumber
         this.separator = " "
         this.forMobilePhone = true
         this.forHomePhone = true
 
-
         
+
         this.functionFor_blurInput = this.checkAndUpdateInputValue
         /*  
+            -- options:
+
             #check + change border color
             this.functionFor_blurInput = this.checkInputValue 
 
@@ -70,23 +63,16 @@ export default class FormInput{
         */
 
 
+
+        // -- other model
+        this.thaiPhoneNumber = new ThaiPhoneNumber()
+        this.thaiIdNumber = new ThaiIdNumber()
         
-        //-- for getting value from input
-        this.trimValue = true;
-        this.removeSpace = false
-
-
-
-
-
-        //-- get option value ------------
-        for(var key in options){
-            this[key] = options[key]
-        }
-
-
+        
         //-- view ------------
         this.view = new View(this)
+
+
 
 
         //-- data ------------
@@ -99,13 +85,15 @@ export default class FormInput{
 
         //-- function ------------
         this.extraFunction_checkInputValue = function(isValid, value){return isValid}
-        
-        
+
+
+
     }
 
     createViews(elementStyle={}){
 
 
+        
         this.thaiPhoneNumber.separator = this.separator
         this.thaiPhoneNumber.forMobilePhone = this.forMobilePhone
         this.thaiPhoneNumber.forHomePhone = this.forHomePhone

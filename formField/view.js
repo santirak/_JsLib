@@ -1,4 +1,6 @@
-export default class View{
+import ViewTemplate from "../_class/view.js"
+
+export default class View extends ViewTemplate{
 
     /*    
     README
@@ -16,8 +18,9 @@ export default class View{
     */
 
 
-    constructor(viewController=null, options = {}) {
+    constructor(viewController=null) {
 
+        super()
 
         //--setting 
         
@@ -39,11 +42,6 @@ export default class View{
        
        
 
-        //-- get option value
-        for(var key in options){
-            this[key] = options[key]
-        }
-
 
     }
 
@@ -52,9 +50,9 @@ export default class View{
 
 
     //-- view creator ---------
-    createElements(elementStyle, name, isRequired=false){
+    createElements(elementStyle = null, name, isRequired=false){
 
-        this.elementStyle = elementStyle
+        this.updateStyleObject(elementStyle)
 
         var mainParentNode = this.createMainParentNode()
         
@@ -157,13 +155,6 @@ export default class View{
 
 
 
-
-
-    setElementStyle(element, styles){
-        for(var key in styles){
-            element.style[key] = styles[key]
-        }
-    }
 
 
     //-- view modifier ---------

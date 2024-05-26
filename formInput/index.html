@@ -33,7 +33,7 @@
 
     
 
-    this page for testing  input with form input<br>
+    this page for testing ---- input with form input <br>
 
 
    
@@ -41,9 +41,6 @@
     <script type="module">
 
         import FormInput from "./formInput.js"
-
-
-
 
 
 
@@ -56,10 +53,6 @@
 
 
 
-
-
-
-
         var formInput = new FormInput()
         formInput.valueType = "thaiPhoneNumber"
         formInput.thaiPhoneNumber.separator = "-"
@@ -68,7 +61,7 @@
             console.log("extraFunction_checkInputValue")
             return isValid
         }
-        var returnElements = formInput.createViews()
+        var returnElements = formInput.createViews({style_input: {color: "pink"}})
         document.body.appendChild(returnElements.mainParentNode)
 
        
@@ -113,7 +106,7 @@
         var returnElements = formInput.createViews()
         document.body.appendChild(returnElements.mainParentNode)
 
-        1709900038705
+        
 
 
 

@@ -1,5 +1,6 @@
+import ViewTemplate from "../_class/view.js"
 
-export default class View{
+export default class View extends ViewTemplate{
 
     /*    
     README
@@ -26,15 +27,9 @@ export default class View{
 
     constructor(viewController, options={}) {
 
-       
-
-        
-
-        
-
+        super()
 
         //-- setting ----
-        // this.isDisplaying = false
         this.createDropdownPointer = false;
         
 
@@ -52,8 +47,29 @@ export default class View{
 
         //-- style
         this.elementStyle = {
-            style_dropdownParent: {},
-            style_pointer: {}
+            style_dropdownParent: {
+                width: "100%",
+                position: "absolute",
+                top: "105%",
+                left: "0%",
+                cursor: "default",
+                zIndex: "5",
+                maxHeight: "300px",
+                backgroundColor: "white",
+                boxShadow:  "0px 0px 6px rgba(0, 0, 0, 0.3)",
+                overflow: "scroll"
+            },
+            style_pointer: {
+                position: "absolute",
+                height: "0px",
+                borderWidth: "10px",
+                borderStyle: "solid",
+                top: "100%",
+                left: "20px",
+                borderRadius: "8px",
+                borderColor: "transparent transparent red transparent",
+                cursor: "default"
+            }
         }
 
     }
@@ -62,13 +78,9 @@ export default class View{
 
 
     
-    createElements(elementStyle = {}, elements){
-        // this.elements = elements
+    createElements(elementStyle = null, elements){
 
-        // console.log("createElements().elements: ")
-        // console.log(elements)
-
-        this.elementStyle = elementStyle
+        this.updateStyleObject(elementStyle)
 
         this.elementsForPreventHideDropdown = []
         for(var key in elements){
@@ -122,33 +134,10 @@ export default class View{
     createDropdownParentNode(){
 
         var dropdownParentNode = document.createElement("DIV");        
-        dropdownParentNode.style.width = "100%";
-        dropdownParentNode.style.position = "absolute";
-        dropdownParentNode.style.top = "105%";
-        dropdownParentNode.style.left = "0%";
-        dropdownParentNode.style.cursor = "default";
-        dropdownParentNode.style.zIndex = "5";
-        dropdownParentNode.style.maxHeight = "300px"
-        dropdownParentNode.style.backgroundColor = "white"
-        dropdownParentNode.style.boxShadow =  "0px 0px 6px rgba(0, 0, 0, 0.3)";
-        dropdownParentNode.style.overflow = "scroll"
-        // dropdownParentNode.style.overflowX = "visible"
 
+        dropdownParentNode.innerHTML = "Dropdown Parent Node";
         
-        // dropdownParentNode.style.fontSize = "inherit"
-        // dropdownParentNode.style.fontFamily = "inherit"
-        dropdownParentNode.innerHTML = "innerHTML";
-
-
         this.setElementStyle(dropdownParentNode, this.elementStyle.style_dropdownParent)
-
-        //--dec 
-        // dropdownParentNode.style.width = "200px";
-        // dropdownParentNode.style.backgroundColor = "white";
-        // dropdownParentNode.style.top = "60px";
-        // dropdownParentNode.style.right = "0px";
-        // dropdownParentNode.style.borderRadius = "12px";
-        // dropdownParentNode.style.boxShadow = "0px 0px 6px rgba(0, 0, 0, 0.3)";
 
         this.dropdownParentNode = dropdownParentNode;
         
@@ -162,16 +151,7 @@ export default class View{
     createPointerNode(){
 
         var pointerNode = document.createElement("DIV");
-        // pointerNode.style.display = "none";
-        pointerNode.style.position = "absolute";
-        pointerNode.style.height = "0px";
-        pointerNode.style.borderWidth = "10px";
-        pointerNode.style.borderStyle = "solid";
-        pointerNode.style.top = "100%";
-        pointerNode.style.left = "20px";
-        pointerNode.style.borderRadius = "8px";
-        pointerNode.style.borderColor = "transparent transparent red transparent";
-        pointerNode.style.cursor = "default";
+       
         pointerNode.innerHTML = " "
 
         this.setElementStyle(pointerNode, this.elementStyle.style_pointer)
@@ -180,14 +160,6 @@ export default class View{
 
         return pointerNode
     }
-
-
-    setElementStyle(element, styles){
-        for(var key in styles){
-            element.style[key] = styles[key]
-        }
-    }
-
 
 
 
@@ -200,10 +172,12 @@ export default class View{
         }
     }
 
+
+    //-- TODO: 
     changeDropdownLocationRelateToParentLocation(){
 
 
-        //-- TODO: 
+        
 
         // console.log(".top: " + this.dropdownParentNode.style.top)
         // console.log(".bottom:" + this.dropdownParentNode.style.bottom)

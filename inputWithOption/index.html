@@ -87,7 +87,8 @@
         var parent = document.createElement("div")
         parent.style.width = "200px"
 
-        var inputWithOption = new InputWithOption({isSearchable: true})
+        var inputWithOption = new InputWithOption()
+        inputWithOption.isSearchable = true
         inputWithOption.afterFunctin_selectItem = function(item){
             console.log(inputWithOption.getSelectedItem())
         }
@@ -99,8 +100,7 @@
             })
         }
         var returnElements = inputWithOption.createViews({}, items)
-        // inputWithOption.disableInputSelection()
-
+        
         parent.appendChild(returnElements.mainParentNode)
         document.body.appendChild(parent)
 
@@ -115,15 +115,16 @@
         parent.style.width = "200px"
 
         var inputWithOption = new InputWithOption()
-        inputWithOption.isSearchable = true
+        inputWithOption.isSearchable = false
         inputWithOption.allowMisMatchInput = true
         inputWithOption.allowEmptyInput = true
 
-
         inputWithOption.inputMode = "numeric"
-        inputWithOption.view.style_mainParent = {
-            width: "100px"
-        }
+
+        inputWithOption.view.updateStyleObject({style_mainParent: {width: "100px"}})
+
+        
+
         
 
         var startYear = 2023
@@ -160,16 +161,19 @@
             }
         }
 
-        var style_input = {
-            backgroundColor: "pink",
-            border: "1px solid orange"
-        }
-        var returnElements = inputWithOption.createViews({style_input: style_input}, items)
+        // var style_input = {
+        //     
+        //     
+        // }
+
+        inputWithOption.view.updateStyleObject({style_input: {backgroundColor: "pink", border: "1px solid orange"}})
+        var returnElements = inputWithOption.createViews(null, items)
+
         document.body.appendChild(returnElements.mainParentNode)
 
 
 
-        inputWithOption.recreateListItems([{id: 1, text: "new"}])
+        // inputWithOption.recreateListItems([{id: 1, text: "new"}])
         
         var inputNode = document.createElement("input")
         inputNode.style.width = "70%"

@@ -18,7 +18,7 @@ export default class Calendar{
 
 
     
-    constructor(options={}){
+    constructor(){
 
         //--setting ------------
         this.showTodayButton = true
@@ -28,13 +28,6 @@ export default class Calendar{
         
         // this.functionFor_clickDay = this.checkAndUpdateInputValue
         
-
-
-        //-- get option value ------------
-        for(var key in options){
-            this[key] = options[key]
-        }
-
 
         //-- other
         this.inputWithOption_year = new InputWithOption()
@@ -56,6 +49,13 @@ export default class Calendar{
 
         //-- function ------------
         this.afterFunction_selectDay = function(){}
+
+
+
+        // //-- get option value ------------
+        //  for(var key in options){
+        //     this[key] = options[key]
+        // }
         
         
     }
@@ -84,6 +84,13 @@ export default class Calendar{
     showCalendarForSpecificYearMonth(year, monthNumber){
         this.inputWithOption_year.selectItemFromId(year)
         this.inputWithOption_month.selectItemFromId(monthNumber)
+    }
+
+
+    showCurrentMonth(){
+        var Today = new Date()
+        this.showCalendarForSpecificYearMonth(Today.getFullYear(), Today.getMonth()+1)
+
     }
 
 

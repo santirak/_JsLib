@@ -21,9 +21,11 @@ export default class ThaiPhoneNumber {
 
     constructor() {
 
+        // -- setting
         this.separator = " "
         this.forMobilePhone = true
         this.forHomePhone = true
+
 
         this.numberPatterns = {
             "02": {

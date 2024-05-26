@@ -1,4 +1,6 @@
-export default class View{
+import ViewTemplate from "../_class/view.js"
+
+export default class View extends ViewTemplate{
 
     /*    
     README
@@ -16,46 +18,97 @@ export default class View{
     */
 
 
-    constructor(viewController, options = {}) {
+    constructor(viewController) {
 
-
+        super()
+        
         //--setting 
         
         
         
-        
-
         //-- view controller
         this.viewController = viewController
 
 
         //-- style
         this.elementStyle = {
-            style_mainParent: {},
-            style_arrowParent: {},
-            style_inputParent: {},
-            style_input: {},
-            style_listParent: {},
-            style_item: {}
+            style_mainParent: {
+                width: "100%",
+                float: "left"
+            },
+            style_arrowParent: {
+                width: "16px",
+                float: "right",
+                overflow: "hidden"
+            },
+            style_arrowParentWhenHide: {
+                width: "0px",
+            },
+            style_arrowSvgNode: {
+                width: "100%",
+                float: "left",
+                textAlign: "center",
+                stroke: "dimgray",
+                padding: "3px 4px",
+                paddingBottom: "4.5px",
+                fontSize: "1px",
+                cursor: "pointer"
+            },
+            style_arrowSvgNodeWhenDisabled: {
+                stroke: "lightgray"
+            },
+            style_inputParent: {
+                position: "relative",
+                marginRight: "16px"
+            },
+            style_inputParentWhenNoArrow: {
+                marginRight: "0px"
+            },
+            style_input: {
+                width: "100%",
+                // float: "left" //-- ** No float to make input parent node wrap input node since input parent node has no float
+                padding: "4px",
+                borderColor: ''
+            },
+            style_inputWithInvalidValue: {borderColor: 'red'},
+            style_dropdownSymbolNode: {
+                position: "absolute",
+                right: "0px",
+                padding: "4px",
+                top: "50%",
+                transform: "translate(0%,-50%)",
+                cursor: "pointer"
+
+            },
+            style_listParent: {
+                width: "100%",
+                float: "left"
+            },
+            style_item: {
+                width: "100%",
+                float: "left",
+                cursor: "pointer",
+                padding: "4px",
+                textAlign: "left",
+                backgroundColor: ''
+            },
+            style_itemWhenSelected: {
+                backgroundColor: 'lightgray'
+            }
+            
         }
-        // this.itemViewsById = {}
 
 
-        
-        //-- get option value
-        for(var key in options){
-            this[key] = options[key]
-        }
-
-
+        this.arrowSVG = '<svg style="display: block;" height="" width="100%" viewBox = "0,0,48,24"><path d="M48 24 L24 2 L0 24" stroke="" stroke-width="6" fill="none"/></svg>'
+    
     }
 
     
 
     //-- view creator ---------
-    createElements(elementStyle, items){
+    createElements(elementStyle = null, items){
 
-        this.elementStyle = elementStyle
+        this.updateStyleObject(elementStyle)
 
         var mainParentNode = this.createMainParentNode()
         
@@ -79,7 +132,7 @@ export default class View{
             parentNode: inputParentNode,
             buttonNode: inputNode
         }
-        this.viewController.dropdown.createViews(elementStyle, elements)
+        this.viewController.dropdown.createViews(null, elements)
         this.viewController.dropdown.setDrowdownConent(listParentNode)
 
         return {
@@ -98,41 +151,28 @@ export default class View{
 
     createMainParentNode(){
         var mainParentNode = document.createElement("DIV")
-        mainParentNode.style.width = "100%"
-        mainParentNode.style.float = "left"
-        
         this.mainParentNode = mainParentNode
-
         this.setElementStyle(mainParentNode, this.elementStyle.style_mainParent)
-
         return mainParentNode
     }
 
 
     createInputParentNode(){
         var inputParentNode = document.createElement("div");
-        inputParentNode.style.position = "relative"
-        inputParentNode.style.marginRight = (this.viewController.showMoveArrows)? "16px": "0px"
-        // inputParentNode.style.fontFamily = "inherit"
-        // inputParentNode.style.overflow = "hidden"
-
         this.inputParentNode = inputParentNode
 
         if(this.viewController.showDropdownSymbol){
             var dropdownSymbolNode = document.createElement("div")
-            dropdownSymbolNode.style.position = "absolute"
-            dropdownSymbolNode.style.right = "0px"
-            dropdownSymbolNode.style.padding = "4px"
-            dropdownSymbolNode.style.top = "50%"
-            dropdownSymbolNode.style.transform = "translate(0%,-50%)"
-            dropdownSymbolNode.style.cursor = "pointer"
             dropdownSymbolNode.innerHTML = "&#9662;"
             dropdownSymbolNode.onclick = () => {this.inputNode.focus()}
+
+            this.setElementStyle(dropdownSymbolNode, this.elementStyle.style_dropdownSymbolNode)
             inputParentNode.appendChild(dropdownSymbolNode)
         }
         
         
         this.setElementStyle(inputParentNode, this.elementStyle.style_inputParent)
+        if(!this.viewController.showMoveArrows) this.setElementStyle(inputParentNode, this.elementStyle.style_inputParentWhenNoArrow)
         return inputParentNode
     }
 
@@ -141,30 +181,26 @@ export default class View{
     createInputNode(){
 
         var inputNode = document.createElement("input");
-		inputNode.style.width = "100%"
-        // inputNode.style.float = "left" //-- ** No float to make input parent node wrap input node since input parent node has no float
-        inputNode.style.padding = "4px"
+        // // inputNode.style.float = "left" //-- *** NOTE: No float to make input parent node wrap input node since input parent node has no float
+        
         inputNode.placeholder = this.viewController.placeholder
 
         if(!this.viewController.isSearchable){
-            // inputNode.style.color = "transparent"
-            // inputNode.style.textShadow = "0 0 0 black"
             inputNode.style.caretColor = "transparent"
-            inputNode.setAttribute("inputmode", "none") //--prevent showing keyboard on touch device
-            inputNode.addEventListener("keydown", (event)=>{event.preventDefault()}) //-- prevnet all keyboard
+            inputNode.setAttribute("inputmode", "none") //-- *** NOTE: prevent showing keyboard on touch device
+            inputNode.addEventListener("keydown", (event)=>{event.preventDefault()}) //-- *** NOTE: prevnet all keyboard
         }
         else{
             inputNode.setAttribute("inputmode", this.viewController.inputMode)
         }
 
-        /* readOnly is not used because it prevent focus the input */
+        /* *** NOTE: readOnly is not used because it prevent focus the input */
         // inputNode.readOnly = !this.isSearchable
         // inputNode.disabled = !this.isSearchable
         
         this.setElementStyle(inputNode, this.elementStyle.style_input)
 
         this.inputNode = inputNode
-
 
         this.inputNode.onfocus = (event) => {
             this.viewController.whenInputFocus()
@@ -191,11 +227,6 @@ export default class View{
 
 
         var itemNode = document.createElement("div");
-		itemNode.style.width = "100%"
-        itemNode.style.float = "left"
-        itemNode.style.cursor = "pointer"
-        itemNode.style.padding = "4px"
-        itemNode.style.textAlign = "left"
         itemNode.innerHTML = item.text
         itemNode.onclick = () => {
             this.viewController.chooseItem(item)
@@ -205,15 +236,10 @@ export default class View{
 
         this.setElementStyle(itemNode, this.elementStyle.style_item)
 
-        itemNode.style.backgroundColor = (item.isSelected)? "lightgray": ""
+        if(item.isSelected) this.setElementStyle(itemNode, this.elementStyle.style_itemWhenSelected)
         itemNode.style.display = (item.isDisplayed)? "": "none"
         
 
-        
-        // this.itemViewsById[item.id] = {
-        //     itemNode: itemNode,
-        //     isDisplayed: true
-        // }
         return itemNode
     }
 
@@ -239,9 +265,6 @@ export default class View{
     createListParent(){
 
         var parentNode = document.createElement("div");
-		parentNode.style.width = "100%"
-        parentNode.style.float = "left"
-        // parentNode.style.padding = "4px"
         this.listParentNode = parentNode
 
         this.setElementStyle(parentNode, this.elementStyle.style_listParent)
@@ -249,41 +272,27 @@ export default class View{
         return parentNode
     }
 
-    setElementStyle(element, styles){
-        for(var key in styles){
-            element.style[key] = styles[key]
-        }
-    }
-
-
+   
 
 
 
     createArrowNode(){
 
         var arrowParentNode = document.createElement("div")
-        arrowParentNode.style.width = (this.viewController.showMoveArrows)? "16px": "0px",
-        arrowParentNode.style.float = "right"
-        arrowParentNode.style.overflow = "hidden"
         this.setElementStyle(arrowParentNode, this.elementStyle.style_arrowParent)
+        if(!this.viewController.showMoveArrows) this.setElementStyle(arrowParentNode, this.elementStyle.style_arrowParentWhenHide)
 
         var createNode = () => {
             var node = document.createElement("div")
-            node.style.width = "100%"
-            node.style.float = "left"
-            node.style.textAlign = "center"
-            node.style.padding = "3px 4px"
-            node.style.paddingBottom = "4.5px"
-            node.style.fontSize = "1px"
-            node.style.cursor = "pointer"
-            node.style.stroke = this.viewController.arrowStrokeColor
-            node.innerHTML = '<svg style="display: block;" height="" width="100%" viewBox = "0,0,48,24"><path d="M48 24 L24 2 L0 24" stroke="" stroke-width="6" fill="none"/></svg>'
+            node.innerHTML = this.arrowSVG
+
+            this.setElementStyle(node, this.elementStyle.style_arrowSvgNode)
+            
             return node
         }
 
 
         var upNode = createNode()
-        // upNode.style.backgroundColor = "pink"
         upNode.onclick = () => {
             this.viewController.moveSelection("previous")
             this.viewController.afterFunctin_selectItem()
@@ -293,7 +302,6 @@ export default class View{
 
 
         var downNode = createNode()
-        // downNode.style.backgroundColor = "blue"
         downNode.style.transform = "rotate(180deg)"
         downNode.onclick = () => {
             this.viewController.moveSelection("next")
@@ -319,8 +327,12 @@ export default class View{
     }
 
     changeArrowStrokeColor(selectionOrder, items){
-        this.upArrowNode.style.stroke  = (selectionOrder==0)? "lightgray": this.viewController.arrowStrokeColor
-        this.downArrowNode.style.stroke = (selectionOrder==items.length-1)? "lightgray": this.viewController.arrowStrokeColor
+        
+        var elementStyle = this.elementStyle 
+
+        this.setElementStyle(this.upArrowNode, (selectionOrder==0)? elementStyle.style_arrowSvgNodeWhenDisabled: elementStyle.style_arrowSvgNode)
+        this.setElementStyle(this.downArrowNode, (selectionOrder==items.length-1)? elementStyle.style_arrowSvgNodeWhenDisabled: elementStyle.style_arrowSvgNode)
+
     }
 
     changeItemDisplaying(items){
@@ -341,8 +353,11 @@ export default class View{
 
     //-- view modifier ---------
     changeInputStyleAsValueValidation(isValid,){
-        this.setElementStyle(this.inputNode, this.viewController.validStyle[isValid])
+        
+        var style = (isValid)? this.elementStyle.style_input: this.elementStyle.style_inputWithInvalidValue
+        this.setElementStyle(this.inputNode, style)
     }
+    
     
 
     recreateListItems(items){

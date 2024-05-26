@@ -1,4 +1,6 @@
-export default class View{
+import ViewTemplate from "../_class/view.js"
+
+export default class View extends ViewTemplate{
 
     /*    
     README
@@ -10,36 +12,32 @@ export default class View{
     CUSTOMIZATION
 
     WARNING
-       
+       NOTE: this style is used for valid value too so all style value for invalid value need to be in normal style too.
 
     DEPENDENCY
     */
 
 
-    constructor(viewController, options = {}) {
+    constructor(viewController) {
 
+        super()
 
         //--setting 
         
-        
+
         
         //-- view controller
         this.viewController = viewController
 
 
-        //-- style
+        //-- set style of each element
+        // --  *** NOTE: this style is used for valid value too so all style value for invalid value need to be in normal style too.
         this.elementStyle = {
-            style_input: {}
+            style_input: {borderColor: ''}, 
+            style_inputWithInvalidValue: {borderColor: 'red'}
         }
 
 
-        
-
-
-        //-- get option value
-        for(var key in options){
-            this[key] = options[key]
-        }
 
 
     }
@@ -49,12 +47,11 @@ export default class View{
 
 
     //-- view creator ---------
-    createElements(elementStyle={}){
+    createElements(elementStyle=null){
 
-        this.elementStyle = elementStyle
-
-        console.log("createElements")
-        console.log(elementStyle)
+        this.updateStyleObject(elementStyle)
+        
+        // console.log("createElements")
 
         var mainParentNode = this.createMainParentNode()
         
@@ -67,10 +64,6 @@ export default class View{
 
     }
 
-
-    // defaultStyle_mainParent(){
-    //     return {}
-    // }
 
 
     createMainParentNode(){
@@ -135,28 +128,16 @@ export default class View{
     }
 
 
-
-
-    setElementStyle(element, styles){
-        for(var key in styles){
-            element.style[key] = styles[key]
-        }
-    }
-
-
-
     getInputValue(){
         return this.inputNode.value
     }
 
-    
-
-
-
+   
 
     //-- view modifier ---------
     changeInputStyleAsValueValidation(isValid,){
-        this.setElementStyle(this.inputNode, this.viewController.validStyle[isValid])
+        var style = (isValid)? this.elementStyle.style_input: this.elementStyle.style_inputWithInvalidValue
+        this.setElementStyle(this.inputNode, style)
     }
 
     setInputValue(value){

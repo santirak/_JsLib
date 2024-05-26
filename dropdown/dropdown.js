@@ -24,21 +24,21 @@ export default class Dropdown{
     */
 
     
-    constructor(options={}) {
-
-        
+    constructor() {
 
         //--settting
-        this.clickButtonTo = "toggle" //-- show, toggle
-        this.clickOutsideToHide = true
+        this.clickButtonTo = "toggle" 
+        /*  
+            //-- options
+            show
+            toggle 
         
-        //-- get option value
-        for(var key in options){
-            this[key] = options[key]
-        }
+        */
+
+        this.clickOutsideToHide = true
 
         //-- view 
-        this.view = new View(this, options)
+        this.view = new View(this)
         
 
         //-- utility

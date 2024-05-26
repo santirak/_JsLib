@@ -9,11 +9,6 @@ export default class InputWithCalendar{
 
     STRUCTURE
 
-        items = {
-                id: 1,
-                text: "bbb"
-            }
-
     CUSTOMIZATION
 
     WARNING
@@ -21,29 +16,20 @@ export default class InputWithCalendar{
     DEPENDENCY
     */
 
-    constructor(options={}){
+    constructor(){
 
         //--setting -----
         this.hideCalendarAfterSelect = true
         this.allowNoSelected = false
         this.placeholder = ""
 
+
+        // -- calendar properties
         this.showTodayButton = true
         var currentDate = new Date()
         this.firstYear = currentDate.getFullYear()    
         this.lastYear =  this.firstYear - 10
 
-        this.validStyle = {
-            true: {borderColor: ""},
-            false: {borderColor: "red"}
-        }
-        
-
-
-        //-- get option value
-        for(var key in options){
-            this[key] = options[key]
-        }
 
         //-- other 
         this.dropdown = new Dropdown()
@@ -52,10 +38,8 @@ export default class InputWithCalendar{
         //-- view 
         this.view = new View(this)
 
-
         //-- data
         
-
         //-- utility 
         this.disable = false
         

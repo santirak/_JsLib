@@ -8,10 +8,16 @@ export default class InputWithOption{
 
     STRUCTURE
 
-        items = {
+        items = [
+            {
                 id: 1,
+                text: "aaa"
+            },
+            {
+                id: 2,
                 text: "bbb"
             }
+        ]
 
     CUSTOMIZATION
 
@@ -20,11 +26,17 @@ export default class InputWithOption{
     DEPENDENCY
     */
 
-    constructor(options={}){
+    constructor(){
 
         //--setting -----
         this.isSearchable = false
-        this.inputMode = "text"
+        this.inputMode = "text" 
+        /* 
+            for keyboard in mobile device
+            // -- options
+            text
+            numeric
+        */
 
         this.allowMisMatchInput = false 
         /*
@@ -36,20 +48,8 @@ export default class InputWithOption{
         this.placeholder = ""
         this.showMoveArrows = true
         this.showDropdownSymbol = true
-        this.arrowStrokeColor = "dimgray"
 
-
-        this.validStyle = {
-            true: {borderColor: ""},
-            false: {borderColor: "red"}
-        }
-
-
-
-        //-- get option value
-        for(var key in options){
-            this[key] = options[key]
-        }
+       
 
         //-- other 
         this.dropdown = new Dropdown()

@@ -15,20 +15,16 @@ export default class Model{
     */
 
 
-    constructor(options={}){
+    constructor(){
 
         //--setting -----
         this.haveCloseIcon = false
         
 
-        //-- get option value
-        for(var key in options){
-            this[key] = options[key]
-        }
-
         //-- view 
         this.view = new View(this, options)
 
+        // -- utilities
         this.isDisplaying = false
     }
 

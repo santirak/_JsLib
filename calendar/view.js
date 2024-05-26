@@ -1,4 +1,7 @@
-export default class View{
+import ViewTemplate from "../_class/view.js"
+import DateText from "../_class/dateText.js"
+
+export default class View extends ViewTemplate{
 
     /*    
     README
@@ -16,8 +19,9 @@ export default class View{
     */
 
 
-    constructor(viewController, options = {}) {
-
+    constructor(viewController) {
+        
+        super()
 
         //--setting 
         
@@ -30,15 +34,55 @@ export default class View{
         //-- create defaul style
 
         this.elementStyle = {
-            style_mainParent: {}
+            style_mainParent: {
+                width: "280px",
+                float: "left",
+                border: "1px solid #d9d9d9",
+                backgroundColor: "white"
+            },
+            style_headParentNode: {
+                backgroundColor: "#d9d9d9"
+            },
+            style_todayButton: {
+                display: "inline-block",
+                float: "right",
+                padding: "8px 4px",
+                cursor: "pointer"
+            },
+            style_dayOfWeekRowParent: {
+                padding: "4px",
+                borderBottom: "1px solid #d9d9d9"
+            },
+            style_dayInMonthParentNode: {
+                padding: "4px"
+            },
+            style_dayBlockParent: {// -- *** NOTE: this style is used for unselected too so all selected block style property must be here too,
+                cursor: "pointer",
+                padding: "4px 0px",
+                textAlign: "center",
+                color: '',
+                backgroundColor: '' 
+            },
+            style_dayBlockParentWhichIsSelected: {
+                backgroundColor: "orange"
+            },
+            style_dayBlockParentWhichInNotInMonth: {
+                color: "lightgray"
+            },
+            style_dayBlockParentOfToday: {
+                color: "red"
+            }
+            
         }
 
 
-        //-- get option value
-        for(var key in options){
-            this[key] = options[key]
+        // -- change style of Other View
+        var elementStyle_forInputWithSelection = {
+            style_mainParent: {width: "80px", margin: "4px"}
         }
-
+        this.viewController.inputWithOption_month.view.updateStyleObject(elementStyle_forInputWithSelection)
+        this.viewController.inputWithOption_year.view.updateStyleObject(elementStyle_forInputWithSelection)
+        console.log(this.viewController.inputWithOption_year.view)
 
     }
 
@@ -47,9 +91,9 @@ export default class View{
 
 
     //-- view creator ---------
-    createElements(elementStyle={}){
+    createElements(elementStyle = null){
 
-        this.elementStyle = elementStyle
+        this.updateStyleObject(elementStyle)
 
         var mainParentNode = this.createMainParentNode()
 
@@ -83,10 +127,6 @@ export default class View{
 
     createMainParentNode(){
         var mainParentNode = document.createElement("DIV")
-        mainParentNode.style.width = "280px"
-        mainParentNode.style.float = "left"
-        mainParentNode.style.border = "1px solid #d9d9d9"
-        mainParentNode.style.backgroundColor = "white"
         
         this.mainParentNode = mainParentNode
 
@@ -101,16 +141,18 @@ export default class View{
         var headParentNode = document.createElement("DIV")
         headParentNode.style.width = "100%"
         headParentNode.style.float = "left"
-        headParentNode.style.backgroundColor = "#d9d9d9"
+        
 
+        
         this.headParentNode = headParentNode
+
+        this.setElementStyle(headParentNode, this.elementStyle.style_headParentNode)
 
         return headParentNode
     }
 
     createHeadContent(){
         
-
         var headParentNode = this.headParentNode
 
         var monthSelectionParent = this.createMonthSelection()
@@ -124,13 +166,7 @@ export default class View{
             headParentNode.appendChild(todayButton)
         }
         
-
-
-
-        
-
         // return headParentNode
-        
     }
 
 
@@ -178,18 +214,8 @@ export default class View{
             }
         }
 
-        var elementStyle = this.elementStyle
-        
-        elementStyle.style_mainParent = {
-            width: "80px",
-            margin: "4px"
-        }
-        
 
-
-        
-
-        var returnElements = inputWithOption.createViews(elementStyle, items)
+        var returnElements = inputWithOption.createViews(null, items)
 
         return returnElements.mainParentNode
     }
@@ -207,8 +233,8 @@ export default class View{
         }
 
 
-        var engMonthAbbs = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-	    // this.month_abbA_thai = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
+        // var engMonthAbbs = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var engMonthAbbs = new DateText().english.monthAbbreviations
         var items = []
         for(var i=0; i<engMonthAbbs.length; i++){
             items.push({
@@ -217,17 +243,7 @@ export default class View{
             })
         }
 
-        var elementStyle = this.elementStyle
-        
-        elementStyle.style_mainParent = {
-            width: "80px",
-            margin: "4px"
-        }
-
-        var returnElements = inputWithOption.createViews(elementStyle, items)
-
-
-        
+        var returnElements = inputWithOption.createViews(null, items)
 
         return returnElements.mainParentNode
     }
@@ -235,17 +251,14 @@ export default class View{
 
     createTodayButton(){
         var todayButton = document.createElement("DIV")
-        todayButton.style.display = "inline-block"
-        todayButton.style.float = "right"
-        todayButton.style.padding = "8px 4px"
-        // todayButton.style.fontSize = "18px"
-        todayButton.style.cursor = "pointer"
-        // todayButton.innerHTML = "&#9737;"
         todayButton.innerHTML = "Today"
         todayButton.onclick = () => {
             var today = new Date()
             this.viewController.showCalendarForSpecificYearMonth(today.getFullYear(), today.getMonth()+1)
         }
+
+
+        this.setElementStyle(todayButton, this.elementStyle.style_todayButton)
 
         return todayButton
     }
@@ -288,15 +301,18 @@ export default class View{
         var rowParent = document.createElement("DIV")
         rowParent.style.width = "100%"
         rowParent.style.float = "left"
-        rowParent.style.padding = "4px"
-        rowParent.style.borderBottom = "1px solid #d9d9d9"
+        
 
-        var weekInWeeKAbbs =["Su", "M", "Tu", "W", "Th", "F", "Sa"];
+        // var weekInWeeKAbbs =["Su", "M", "Tu", "W", "Th", "F", "Sa"];
+        var weekInWeeKAbbs = new DateText().english.dayOfWeekAbbreviations
         for(var i in weekInWeeKAbbs){
             var dayBlockParent = this.createEachDayBlockNode()
             dayBlockParent.innerHTML = weekInWeeKAbbs[i]
             rowParent.appendChild(dayBlockParent)
         }
+
+        this.setElementStyle(rowParent, this.elementStyle.style_dayOfWeekRowParent)
+
         return rowParent
     }
 
@@ -306,7 +322,9 @@ export default class View{
         var dayInMonthParentNode = document.createElement("DIV")
         dayInMonthParentNode.style.width = "100%"
         dayInMonthParentNode.style.float = "left"
-        dayInMonthParentNode.style.padding = "4px"
+       
+        this.setElementStyle(dayInMonthParentNode, this.elementStyle.style_dayInMonthParentNode)
+
 
         var inputWithOption_month = this.viewController.inputWithOption_month
         var inputWithOption_year = this.viewController.inputWithOption_year
@@ -408,30 +426,21 @@ export default class View{
         var dayBlockParent = document.createElement("DIV")
         dayBlockParent.style.width = (100/7)+"%"
         dayBlockParent.style.float = "left"
-        dayBlockParent.style.padding = "4px 0px"
-        dayBlockParent.style.textAlign = "center"
+        
+
+        this.setElementStyle(dayBlockParent, this.elementStyle.style_dayBlockParent)
 
         return dayBlockParent
     }
 
 
     changeDayBlockStyle(dayBlockParent, inMonth, isToday){
-        dayBlockParent.style.cursor = "pointer"
-        dayBlockParent.style.color = (inMonth)? "":"lightgray"
-        if(isToday){
-            dayBlockParent.style.color = "red"
-        }
-        
-    }
-
-    setElementStyle(element, styles){
-        for(var key in styles){
-            element.style[key] = styles[key]
-        }
+        if(!inMonth) this.setElementStyle(dayBlockParent, this.elementStyle.style_dayBlockParentWhichInNotInMonth)
+        if(isToday) this.setElementStyle(dayBlockParent, this.elementStyle.style_dayBlockParentOfToday)
     }
 
     changeSelectionDayBlockStyle(dayBlockParent){
-        dayBlockParent.style.backgroundColor = "lightgray"
+        this.setElementStyle(dayBlockParent, this.elementStyle.style_dayBlockParentWhichIsSelected)
     }
 
     
