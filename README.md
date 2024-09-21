@@ -88,4 +88,4 @@ Consists of 2 files, **View** and **ViewController or Model**, with the ideas of
 - try not to pass setting value inside **option** (avoid using **option**)
 - do not change *elementStyle* directly, it can be changed by 
     1. for **View**, pass new elementStyle when *createView()* is called
-    2. for **Other View**, using *view.updateStyleObject(new_elementStyle)*
+    2. for **Other View**, using *view.updateStyleObject(new_elementStyle)* (have to update before creating elements)
