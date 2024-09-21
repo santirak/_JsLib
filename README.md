@@ -36,7 +36,9 @@ Consists of 2 files, **View** and **ViewController or Model**, with the ideas of
     - create **View** (only **View** Object but no view element is created)
     - data stored
         
-    - utility properties and function (e.g. extraFunction_xxx)
+    - utility properties and function e.g.
+        - extraFunction_xxx
+        - afterFunction_xxx
 
 
 - common properties
