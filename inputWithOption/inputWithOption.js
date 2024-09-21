@@ -75,7 +75,7 @@ export default class InputWithOption{
                 - move by keys when show list
                 - auto first item selection
          */
-        this.afterFunctin_changeSelectedItem = ()=>{} 
+        this.afterFunction_changeSelectedItem = ()=>{} 
 
 
         /* 
@@ -83,7 +83,7 @@ export default class InputWithOption{
                 - click item
                 - move by arrows
          */
-        this.afterFunctin_selectItem = ()=>{} 
+        this.afterFunction_selectItem = ()=>{} 
 
         
 
@@ -274,7 +274,7 @@ export default class InputWithOption{
         //-- change 
         this.view.changeArrowStrokeColor(selectedOrder, items)
 
-        this.afterFunctin_changeSelectedItem()
+        this.afterFunction_changeSelectedItem()
 
         return selectedItem
     }

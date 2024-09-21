@@ -109,10 +109,10 @@ export default class View extends ViewTemplate{
         
 
 
-        this.viewController.inputWithOption_year.afterFunctin_changeSelectedItem = () => {
+        this.viewController.inputWithOption_year.afterFunction_changeSelectedItem = () => {
             this.createBodyContent()
         }
-        this.viewController.inputWithOption_month.afterFunctin_changeSelectedItem = () => {
+        this.viewController.inputWithOption_month.afterFunction_changeSelectedItem = () => {
             this.createBodyContent()
         }
 
@@ -175,7 +175,7 @@ export default class View extends ViewTemplate{
         var inputWithOption = this.viewController.inputWithOption_year
         inputWithOption.isSearchable = true
         inputWithOption.inputMode = "numeric"
-        inputWithOption.afterFunctin_selectItem = function(item){
+        inputWithOption.afterFunction_selectItem = function(item){
             // console.log(inputWithOption.getSelectedItem())
         }
 
@@ -228,7 +228,7 @@ export default class View extends ViewTemplate{
         inputWithOption.isSearchable = true
         
 
-        inputWithOption.afterFunctin_selectItem = function(item){
+        inputWithOption.afterFunction_selectItem = function(item){
             // console.log(inputWithOption.getSelectedItem())
         }
 

@@ -230,7 +230,7 @@ export default class View extends ViewTemplate{
         itemNode.innerHTML = item.text
         itemNode.onclick = () => {
             this.viewController.chooseItem(item)
-            this.viewController.afterFunctin_selectItem()
+            this.viewController.afterFunction_selectItem()
         }
         
 
@@ -295,7 +295,7 @@ export default class View extends ViewTemplate{
         var upNode = createNode()
         upNode.onclick = () => {
             this.viewController.moveSelection("previous")
-            this.viewController.afterFunctin_selectItem()
+            this.viewController.afterFunction_selectItem()
         }
         this.upArrowNode = upNode
         arrowParentNode.appendChild(upNode)
@@ -305,7 +305,7 @@ export default class View extends ViewTemplate{
         downNode.style.transform = "rotate(180deg)"
         downNode.onclick = () => {
             this.viewController.moveSelection("next")
-            this.viewController.afterFunctin_selectItem()
+            this.viewController.afterFunction_selectItem()
         }
         arrowParentNode.appendChild(downNode)
         this.downArrowNode = downNode
