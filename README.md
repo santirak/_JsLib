@@ -44,8 +44,8 @@ Consists of 2 files, **View** and **ViewController or Model**, with the ideas of
 
 - common methods
     - *this.createViews()*: for calling *View.createElements()* to create all view elements
-    - function for getting value from view elements which will call getting value function of **View**
-    - function to setting value in view elements which will call setting value function of **View**
+    - function for getting value from view elements which will call getting-value-function of **View**
+    - function to setting value in view elements which will call setting-value-function of **View**
 
 
 ### View 
