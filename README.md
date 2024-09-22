@@ -86,6 +86,7 @@ Consists of 2 files, **View** and **ViewController or Model**, with the ideas of
 - Don't pass element style within **option**
 - mark sure that all element style names (both general and specific, e.g. *style_input*, *style_inputForYear*) are set in *elementStyle*
 - try not to pass setting value inside **option** (avoid using **option**)
+- use **option** only when need to change property when objects (**ViewController** and **View**) are created 
 - do not change *elementStyle* directly, it can be changed by 
     1. for **View**, pass new elementStyle when *createView()* is called
     2. for **Other View**, using *view.updateStyleObject(new_elementStyle)* (have to update before creating elements)
