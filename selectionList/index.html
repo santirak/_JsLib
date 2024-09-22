@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test</title>
+
+  <style>
+    .button {
+        background-color: gray;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+
+    
+
+    this page for testing  selection list<br>
+
+
+   
+    
+    <script type="module">
+
+        var parentForList = document.createElement("div")
+        parentForList.style.width = "100%"
+        parentForList.style.float = "left"
+  
+
+        import Responsive from "../responsive/responsive.js"
+        var responsive = new Responsive()
+        import SelectionList from "./selectionList.js"
+        var selectionList = new SelectionList({showCheckbox: false})
+        selectionList.selectionType = 1
+  
+        // set function for add reponsive to element after each item is created
+        selectionList.view.functionFor_addResponsiveTo_itemParentNode = (itemPrentNode) => {
+          var stylesByProperty = {
+              width: {
+                  0: "100%",
+                  1: "50%",
+                  2: "33.33%",
+                  3: "25%",
+                  4: "20%"
+              }
+          }
+          responsive.addResponsiveElementAndChangeElementProperty(itemPrentNode, stylesByProperty)
+        }
+
+
+        selectionList.showCheckbox = false
+        selectionList.view.updateStyleObject({
+          style_itemTextParent: {
+                marginLeft: '0px',
+                width: '100%',
+                float: 'left',
+                padding: '4px'
+            }
+        })
+
+
+        // -- set items
+        var items = []
+        for(var i=0; i<12; i++){
+            items.push({
+                id: i,
+                text: "item "+i
+            })
+        }
+
+        selectionList.items = items
+        var returnElements = selectionList.createViews({})
+
+        parentForList.appendChild(returnElements.mainParentNode)
+
+        document.body.appendChild(parentForList)
+      
+        
+        
+    </script>
+
+    
+    
+</body>
+</html>

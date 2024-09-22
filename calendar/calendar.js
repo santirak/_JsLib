@@ -1,4 +1,5 @@
 import InputWithOption from "../inputWithOption/inputWithOption.js"
+import DateText from "../_class/dateText.js"
 import View from "./view.js"
 
 export default class Calendar{
@@ -33,6 +34,7 @@ export default class Calendar{
         this.inputWithOption_year = new InputWithOption()
         this.inputWithOption_month = new InputWithOption()
 
+
         //-- view ------------
         this.view = new View(this)
 
@@ -61,8 +63,79 @@ export default class Calendar{
     }
 
     createViews(elementStyle={}){
+
+        
+        this.createYearSelectionItems()
+        this.createMonthSelectionItems()
+
+
+
         var returnElements = this.view.createElements(elementStyle)
         return returnElements
+    }
+
+
+
+
+    createYearSelectionItems(){
+        var inputWithOption = this.inputWithOption_year
+        inputWithOption.isSearchable = true
+        inputWithOption.inputMode = "numeric"
+        inputWithOption.afterFunction_selectItem = function(item){
+        }
+
+
+        var startYear = this.firstYear
+        var endYear = this.lastYear
+        var change = (startYear > endYear)? "decrease": "increase"
+
+        if(change == "decrease"){
+            var tempYear = startYear
+            startYear = endYear
+            endYear = tempYear
+        }
+
+        var items = []
+
+        for(var i=startYear; i<=endYear; i++){
+            var item = {
+                id: i,
+                text: i
+            }
+
+            // console.log("i: "+i)
+            if(change == "decrease"){
+                items.unshift(item)
+            }
+            else{
+                items.push(item)
+            }
+        }
+        inputWithOption.items = items
+    }
+
+
+    createMonthSelectionItems(){
+
+        var inputWithOption = this.inputWithOption_month
+        inputWithOption.isSearchable = true
+        
+
+        inputWithOption.afterFunction_selectItem = function(item){
+        }
+
+
+        var engMonthAbbs = new DateText().english.monthAbbreviations
+        var items = []
+        for(var i=0; i<engMonthAbbs.length; i++){
+            items.push({
+                id: i+1,
+                text: engMonthAbbs[i]
+            })
+        }
+
+
+        inputWithOption.items = items
     }
 
     //-- for user intent

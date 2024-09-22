@@ -91,13 +91,13 @@ export default class InputWithOption{
         
     }
 
-    createViews(elementStyle={}, items){
+    createViews(elementStyle={}){
 
-        this.items = items
+        // this.items = items
 
         var dropdown = this.dropdown
         
-        var viewElements = this.view.createElements(elementStyle, items)
+        var viewElements = this.view.createElements(elementStyle)
 
         //-- *** prevent input blur when click inside dropdown *** 
         dropdown.view.removeDefaultEvent_mouseDown_dropdownParent()

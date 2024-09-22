@@ -23,6 +23,26 @@ export default class Responsive {
             }
             note - number of property of value object must be greater than screenSizesUpTo.length by 1 for larger screen size than last setting screen size
 
+        - style for each element
+            stylesByProperty: {
+                width: {
+                    0: "100%",
+                    1: "100%",
+                    2: "50%",
+                    3: "33.33%",
+                    4: "25%"
+                    extraFunction: function(){}
+                },
+                height: {},
+                float: {
+                    0: "left",
+                    1: "left",
+                    2: "left",
+                    3: "right",
+                    4: "center"
+                    extraFunction: function(){}
+                }
+            }
     CUSTOMIZATION 
 
 

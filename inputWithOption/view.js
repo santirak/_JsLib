@@ -106,7 +106,9 @@ export default class View extends ViewTemplate{
     
 
     //-- view creator ---------
-    createElements(elementStyle = null, items){
+    createElements(elementStyle = null){
+
+        
 
         this.updateStyleObject(elementStyle)
 
@@ -119,6 +121,8 @@ export default class View extends ViewTemplate{
         var inputNode = this.createInputNode()
         inputParentNode.appendChild(inputNode)
         mainParentNode.appendChild(inputParentNode)
+
+        var items = this.viewController.items
 
         var listParentNode = this.createListParent(items)//-- list parent has to be appended to dropdownParent
         

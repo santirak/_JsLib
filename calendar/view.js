@@ -155,10 +155,10 @@ export default class View extends ViewTemplate{
         
         var headParentNode = this.headParentNode
 
-        var monthSelectionParent = this.createMonthSelection()
+        var monthSelectionParent = this.viewController.inputWithOption_month.createViews().mainParentNode
         headParentNode.appendChild(monthSelectionParent)
 
-        var yearSelectionParent = this.createYearSelection()
+        var yearSelectionParent = this.viewController.inputWithOption_year.createViews().mainParentNode
         headParentNode.appendChild(yearSelectionParent)
 
         if(this.viewController.showTodayButton){
@@ -167,85 +167,6 @@ export default class View extends ViewTemplate{
         }
         
         // return headParentNode
-    }
-
-
-    createYearSelection(){
-        // var inputWithOption = new InputWithOption()
-        var inputWithOption = this.viewController.inputWithOption_year
-        inputWithOption.isSearchable = true
-        inputWithOption.inputMode = "numeric"
-        inputWithOption.afterFunction_selectItem = function(item){
-            // console.log(inputWithOption.getSelectedItem())
-        }
-
-
-        var startYear = this.viewController.firstYear
-        var endYear = this.viewController.lastYear
-        var change = (startYear > endYear)? "decrease": "increase"
-
-        // console.log("startYear: " + startYear)
-        // console.log("endYear: " + endYear)
-
-
-        if(change == "decrease"){
-            var tempYear = startYear
-            startYear = endYear
-            endYear = tempYear
-        }
-
-        // console.log("startYear: " + startYear)
-        // console.log("endYear: " + endYear)
-
-        var items = []
-
-        for(var i=startYear; i<=endYear; i++){
-            var item = {
-                id: i,
-                text: i
-            }
-
-            // console.log("i: "+i)
-            if(change == "decrease"){
-                items.unshift(item)
-            }
-            else{
-                items.push(item)
-            }
-        }
-
-
-        var returnElements = inputWithOption.createViews(null, items)
-
-        return returnElements.mainParentNode
-    }
-
-
-    createMonthSelection(){
-
-        // var inputWithOption = new InputWithOption()
-        var inputWithOption = this.viewController.inputWithOption_month
-        inputWithOption.isSearchable = true
-        
-
-        inputWithOption.afterFunction_selectItem = function(item){
-            // console.log(inputWithOption.getSelectedItem())
-        }
-
-
-        // var engMonthAbbs = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        var engMonthAbbs = new DateText().english.monthAbbreviations
-        var items = []
-        for(var i=0; i<engMonthAbbs.length; i++){
-            items.push({
-                id: i+1,
-                text: engMonthAbbs[i]
-            })
-        }
-
-        var returnElements = inputWithOption.createViews(null, items)
-
-        return returnElements.mainParentNode
     }
 
 

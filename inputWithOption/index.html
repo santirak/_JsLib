@@ -99,7 +99,8 @@
                 text: "item "+i
             })
         }
-        var returnElements = inputWithOption.createViews({}, items)
+        inputWithOption.items = items
+        var returnElements = inputWithOption.createViews({})
         
         parent.appendChild(returnElements.mainParentNode)
         document.body.appendChild(parent)
@@ -165,9 +166,9 @@
         //     
         //     
         // }
-
+        inputWithOption.items = items
         inputWithOption.view.updateStyleObject({style_input: {backgroundColor: "pink", border: "1px solid orange"}})
-        var returnElements = inputWithOption.createViews(null, items)
+        var returnElements = inputWithOption.createViews(null)
 
         document.body.appendChild(returnElements.mainParentNode)
 
