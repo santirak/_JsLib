@@ -90,3 +90,6 @@ Consists of 2 files, **View** and **ViewController or Model**, with the ideas of
 - do not change *elementStyle* directly, it can be changed by 
     1. for **View**, pass new elementStyle when *createView()* is called
     2. for **Other View**, using *view.updateStyleObject(new_elementStyle)* (have to update before creating elements)
+- to add Reponsive to elements **View** (see SelectionList for example)
+    - place *functionFor_addResponsiveTo_xxx* in function that create that element (including when modifing elemnet)
+    - set this function when new **ViewController** is created
