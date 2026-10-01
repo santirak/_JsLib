@@ -122,6 +122,7 @@ export default class InputWithOption{
     // }
 
     whenInputFocus(){
+        console.log('function: whenInputFocus()')
         this.dropdown.showDropdown()
         this.addEventListenerForKeyboard()
     }

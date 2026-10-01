@@ -148,7 +148,7 @@ export default class Dropdown{
 
     showDropdown(){
         
-        // console.log("this.isDisabled: "+this.isDisabled)
+        console.log('function: showDropdown()')
         if(this.isDisabled) return
 
         this.isDisplaying = true
